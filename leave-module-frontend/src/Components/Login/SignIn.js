@@ -44,7 +44,7 @@ export default function SignIn() {
                 } else if (designation === "Manager") {
                     navigate('/manager');
                 } else if (designation === "Team Lead") {
-                    navigate('/teamLead');
+                    navigate('/team-lead');
                 } else if (designation === "Employee") {
                     navigate('/employee');
                 }

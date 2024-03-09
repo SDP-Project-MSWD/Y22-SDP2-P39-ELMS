@@ -30,6 +30,22 @@ exports.setLeaveRequest = async (req, res) => {
         res.status(200).json({ message: "Leave request created successfully" });
     } catch (error) {
         // Handle any errors
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: "Internal server error" , error});
+    }
+}
+
+
+exports.getLeaveRequests = async (req, res) => {
+    try {
+        const empID = req.params.empID; // Corrected from req.params.id
+        const leaves = await Leave.find({ empID: empID });
+        if (!leaves || leaves.length === 0) { 
+            res.status(404).json({ message: 'No leave requests found for the employee' }); 
+        } else { 
+            res.status(200).json(leaves); 
+        } 
+    } catch (error) {
+        console.error("Error fetching leaves:", error);
+        res.status(500).json({ message: 'Error fetching leaves', error: error.toString() });
     }
 }

@@ -17,46 +17,47 @@ import DashboardA from './Components/Admin/Admin Pages/DashboardA';
 
 //import for Manager 
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
-import LeaveM from './Components/User/Manager/Manager Pages/LeaveM';
-
+import LeaveM from './Components/User/Manager/Manager Pages/LeaveM'
 
 //import for Team Lead
-import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL.js';
-import LeaveTL from './Components/User/Team Lead/Team Lead Pages/LeaveTL.js';
-
+import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL';
+import LeaveTL from './Components/User/Team Lead/Team Lead Pages/LeaveTL';
 
 //import for  Employee
-import Dashboard from './Components/User/Employee/Employee Pages/DashboardE';
+import DashboardE from './Components/User/Employee/Employee Pages/DashboardE';
 import LeaveE from './Components/User/Employee/Employee Pages/Leave';
+import LeaveStatusE from './Components/User/Employee/Employee Pages/LeaveStatus';
 
 function App() {
-  //Leave management system
   return (
     <AuthProvider>
-      <Toaster position='bottom-right' toastOptions={{duration: 2000}} />
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signIn' element={<SignIn />} />
-        <Route path='/forgotPassword' element={<ForgotPassword />} />
-        <Route path='/reset-password/:id/:token' element={<ResetPassword />}/>
-        <Route path="/admin" element={<HomeA />}>
-          <Route path='' element={<DashboardA/>} />
-        </Route>
-        <Route path="/manager" element={<HomeM />}>
-          <Route path='' element={<DashboardM/>} />
-          <Route path='leaves' element={<LeaveM/>} />
-        </Route>
-        <Route path="team-lead" element={<HomeTL />}>
-          <Route path='' element={<DashboardTL/>} />
-          <Route path='leaves' element={<LeaveTL/>} />
-        </Route>
-        <Route path="employee" element={<HomeE />}>
-          <Route path='' element={<Dashboard/>} />
-          <Route path='leaves' element={<LeaveE/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      <Toaster position='bottom-right' toastOptions={{ duration: 2000 }} />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/signIn' element={<SignIn />} />
+          <Route path='/forgotPassword' element={<ForgotPassword />} />
+          <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
+          <Route path="/admin/*" element={<HomeA />}>
+            <Route path='' element={<DashboardA />} />
+          </Route>
+          <Route path="manager" element={<HomeM />}>
+            <Route path='' element={<DashboardM />} />
+            <Route path='leaves' element={<LeaveM/>}/>
+            <Route path='leave-status' element={<LeaveStatusE />} />
+          </Route>
+          <Route path="team-lead" element={<HomeTL />}>
+            <Route path='' element={<DashboardTL />} />
+            <Route path='leaves' element={<LeaveTL/>}/>
+            <Route path='leave-status' element={<LeaveStatusE />} />
+          </Route>
+          <Route path="employee" element={<HomeE />}>
+            <Route path='' element={<DashboardE />} />
+            <Route path='leaves' element={<LeaveE />} />
+            <Route path='leave-status' element={<LeaveStatusE />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
 }

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const defaultTheme = createTheme();
 
-const Leave = () => {
+const LeaveTL = () => {
   const [leaveDetails, setLeaveDetails] = useState({
     empID: "", // You may need a different manager ID here
     leaveType: "",
@@ -171,4 +171,4 @@ const Leave = () => {
   );
 }
 
-export default Leave;
+export default LeaveTL;

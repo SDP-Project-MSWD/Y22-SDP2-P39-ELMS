@@ -36,7 +36,7 @@ const LeaveSubMenu = () => {
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary="Leave Request" />
+            <ListItemText primary="Apply Leave" />
           </ListItemButton>
           <ListItemButton component={RouterLink} to="/manager/leave-status">
             <ListItemIcon>
