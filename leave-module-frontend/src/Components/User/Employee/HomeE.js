@@ -1,4 +1,3 @@
-// components/Home.js
 import React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +11,11 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Import logout icon
 import { mainListItems } from './listItems';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../../Token/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -65,12 +66,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 
 function HomeE() {
-  const { empID } = useAuth();
+  const { empID, logout } = useAuth(); // Destructure logout from useAuth
   const [open, setOpen] = React.useState(true);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const navigate = useNavigate();
+  const logoutFun =  async () => {
+    await logout();
+    navigate('/');
+  }
 
   // Prevent sidebar from closing when clicking on its content
   const stopPropagation = (event) => {
@@ -106,8 +112,12 @@ function HomeE() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Organization Name - Welcome {empID}
+              Organization Name - Welcome {empID}
             </Typography>
+            {/* Add logout button */}
+            <IconButton color="inherit" onClick={logoutFun} >
+              <ExitToAppIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

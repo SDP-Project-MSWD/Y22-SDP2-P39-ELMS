@@ -1,58 +1,59 @@
 const Leave = require('../models/Leave');
 
-exports.getLeaveRequests = async (req, res) => {
+exports.getInProgess = async (req, res) => {
     try {
-        const managerID = req.params.managerID; // Assuming manager ID is passed as a parameter
-        const leaves = await Leave.find({ managerID: managerID });
-        if (!leaves || leaves.length === 0) { 
-            res.status(404).json({ message: 'No leave requests found for the manager' }); 
-        } else { 
-            res.status(200).json(leaves); 
-        } 
-    } catch (error) {
-        console.error("Error fetching leaves:", error);
-        res.status(500).json({ message: 'Error fetching leaves', error: error.toString() });
+        const acceptedLeaves = await Leave.find({ leaveStatus: 'In Progress' });
+        res.json(acceptedLeaves);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
-exports.approveLeaveRequest = async (req, res) => {
+exports.getAccepted = async (req, res) => {
     try {
-        const leaveID = req.params.leaveID; // Assuming leave ID is passed as a parameter
-        const leave = await Leave.findById(leaveID);
-        if (!leave) {
-            res.status(404).json({ message: 'Leave request not found' });
-        } else {
-            if (leave.leaveStatus === "Approved") {
-                res.status(400).json({ message: 'Leave request already approved' });
-            } else {
-                leave.leaveStatus = "Approved";
-                await leave.save();
-                res.status(200).json({ message: 'Leave request approved successfully' });
-            }
-        }
-    } catch (error) {
-        console.error("Error approving leave request:", error);
-        res.status(500).json({ message: 'Error approving leave request', error: error.toString() });
+        const acceptedLeaves = await Leave.find({ leaveStatus: 'Accepted' });
+        res.json(acceptedLeaves);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
 
-exports.rejectLeaveRequest = async (req, res) => {
+exports.getRejected = async (req, res) => {
     try {
-        const leaveID = req.params.leaveID; // Assuming leave ID is passed as a parameter
-        const leave = await Leave.findById(leaveID);
-        if (!leave) {
-            res.status(404).json({ message: 'Leave request not found' });
-        } else {
-            if (leave.leaveStatus === "Rejected") {
-                res.status(400).json({ message: 'Leave request already rejected' });
-            } else {
-                leave.leaveStatus = "Rejected";
-                await leave.save();
-                res.status(200).json({ message: 'Leave request rejected successfully' });
-            }
-        }
-    } catch (error) {
-        console.error("Error rejecting leave request:", error);
-        res.status(500).json({ message: 'Error rejecting leave request', error: error.toString() });
+        const rejectedLeaves = await Leave.find({ leaveStatus: 'Rejected' });
+        res.json(rejectedLeaves);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }
+
+exports.acceptALeaveRequest = async (req, res) => {
+    try {
+        const leave = await Leave.findById(req.params.id);
+        if (leave) {
+          leave.leaveStatus = 'Accepted';
+          await leave.save();
+          res.json({ message: 'Leave request accepted' });
+        } else {
+          res.status(404).json({ message: 'Leave request not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.rejectALeaveRequest = async (req, res) => {
+    try {
+        const leave = await Leave.findById(req.params.id);
+        if (leave) {
+          leave.leaveStatus = 'Rejected';
+          await leave.save();
+          res.json({ message: 'Leave request rejected' });
+        } else {
+          res.status(404).json({ message: 'Leave request not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+}
+  

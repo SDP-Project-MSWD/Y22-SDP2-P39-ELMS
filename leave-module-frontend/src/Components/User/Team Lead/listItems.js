@@ -13,6 +13,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Dashboard from '../../Images/DashBoard.png';
 import Leave from '../../Images/leave.png';
 import Profile from '../../Images/profile.png';
+import LeaveRequest from '../../Images/LeaveRequests.png'
 
 const LeaveSubMenu = () => {
   const [open, setOpen] = React.useState(false);
@@ -43,6 +44,12 @@ const LeaveSubMenu = () => {
               <DraftsIcon />
             </ListItemIcon>
             <ListItemText primary="Leave Status" />
+          </ListItemButton>
+          <ListItemButton component={RouterLink} to="/team-lead/leave-requests">
+            <ListItemIcon>
+            <img src={LeaveRequest} alt='DashBoard Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
+            </ListItemIcon>
+            <ListItemText primary="Leave Requests" />
           </ListItemButton>
         </List>
       </Collapse>

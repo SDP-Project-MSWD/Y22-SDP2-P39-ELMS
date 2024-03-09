@@ -17,11 +17,13 @@ import DashboardA from './Components/Admin/Admin Pages/DashboardA';
 
 //import for Manager 
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
-import LeaveM from './Components/User/Manager/Manager Pages/LeaveM'
+import LeaveM from './Components/User/Manager/Manager Pages/LeaveM';
+import LeaveRequestsM from './Components/User/Manager/Manager Pages/LeaveRequests';
 
 //import for Team Lead
 import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL';
 import LeaveTL from './Components/User/Team Lead/Team Lead Pages/LeaveTL';
+import LeaveRequestsTL from './Components/User/Team Lead/Team Lead Pages/LeaveRequests';
 
 //import for  Employee
 import DashboardE from './Components/User/Employee/Employee Pages/DashboardE';
@@ -45,11 +47,13 @@ function App() {
             <Route path='' element={<DashboardM />} />
             <Route path='leaves' element={<LeaveM/>}/>
             <Route path='leave-status' element={<LeaveStatusE />} />
+            <Route path='leave-requests' element={<LeaveRequestsM />} />
           </Route>
           <Route path="team-lead" element={<HomeTL />}>
             <Route path='' element={<DashboardTL />} />
             <Route path='leaves' element={<LeaveTL/>}/>
             <Route path='leave-status' element={<LeaveStatusE />} />
+            <Route path='leave-requests' element={<LeaveRequestsTL />} />
           </Route>
           <Route path="employee" element={<HomeE />}>
             <Route path='' element={<DashboardE />} />
