@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = (empID) => {
+const Dashboard = () => {
   return (
     <div>
         <center>

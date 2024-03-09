@@ -17,10 +17,12 @@ import DashboardA from './Components/Admin/Admin Pages/DashboardA';
 
 //import for Manager 
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
+import LeaveM from './Components/User/Manager/Manager Pages/LeaveM';
 
 
 //import for Team Lead
-import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTLjs';
+import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL.js';
+import LeaveTL from './Components/User/Team Lead/Team Lead Pages/LeaveTL.js';
 
 
 //import for  Employee
@@ -43,9 +45,11 @@ function App() {
         </Route>
         <Route path="/manager" element={<HomeM />}>
           <Route path='' element={<DashboardM/>} />
+          <Route path='leaves' element={<LeaveM/>} />
         </Route>
-        <Route path="teamLead" element={<HomeTL />}>
+        <Route path="team-lead" element={<HomeTL />}>
           <Route path='' element={<DashboardTL/>} />
+          <Route path='leaves' element={<LeaveTL/>} />
         </Route>
         <Route path="employee" element={<HomeE />}>
           <Route path='' element={<Dashboard/>} />
