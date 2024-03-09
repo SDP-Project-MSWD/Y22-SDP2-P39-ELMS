@@ -6,7 +6,9 @@ import ForgotPassword from "./Components/Login/ForgotPassword";
 import ResetPassword from './Components/Login/ResetPassword';
 
 function App() {
+  //Leave management system
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
