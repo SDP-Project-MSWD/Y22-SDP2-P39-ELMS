@@ -17,6 +17,6 @@ const userSchema = new mongoose.Schema({
             message: props => `${props.value} is not a valid phone number!`
         }
     },
-    designation: {type: String, required: true, enum: ["Manager", "Team Lead", "Employee"]}
+    designation: {type: String, required: true, enum: ["Admin","Manager", "Team Lead", "Employee"]}
  });
 module.exports = mongoose.model('User', userSchema);

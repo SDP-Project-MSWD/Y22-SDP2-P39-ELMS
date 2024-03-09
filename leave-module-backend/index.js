@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const path = require('path'); 
 const db =require("./config/db");
-const authRoutes = require('./routes/userRoutes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies

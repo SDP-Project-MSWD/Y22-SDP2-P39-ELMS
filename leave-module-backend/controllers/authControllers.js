@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../../models/userModels/Users');
+const User = require('../models/Users');
 const nodemailer = require("nodemailer");
 const { google } = require('googleapis');
-const api = require("../../config/api");
+const api = require("../config/api");
 const OAuth2 = google.auth.OAuth2;
 
 const OAuth2_client = new OAuth2(api.clientId, api.clientSecret)

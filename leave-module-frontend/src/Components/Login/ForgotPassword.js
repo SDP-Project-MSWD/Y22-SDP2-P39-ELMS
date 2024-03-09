@@ -24,6 +24,7 @@ export default function ForgotPassword() {
         const { empID, email } = data;
         try {
             const response = await axios.post('http://localhost:4000/auth/forgot-password', { empID, email });
+            console.log(response);
             if(response.data.Status === "Success"){
                 if(response.data.role === 'Manager' || response.data.role === 'Team Lead' || response.data.role === 'Employee'){
                     navigate('/dashboard');

@@ -13,7 +13,7 @@ const defaultTheme = createTheme();
 
 export default function ResetPassword() {
     const navigate = useNavigate();
-    const [password, setPassword] = useState();
+    const [password, setPassword] = useState('');
     const { id, token } = useParams();
 
 
@@ -21,6 +21,7 @@ export default function ResetPassword() {
         event.preventDefault();
         try {
             const response = await axios.post(`http://localhost:4000/auth/reset-password/${id}/${token}`, { password });
+            console.log(response);
             if(response.data.Status === "Success"){
                 navigate("/signIn")
             }
