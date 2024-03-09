@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const path = require('path'); 
-const db =require("./config/db");
+const db = require("./config/db");
 const authRoutes = require('./routes/authRoutes');
+const leaveRoutes = require('./routes/employeeRoutes');
 
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
@@ -23,10 +24,10 @@ db.once('open', () => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/employee', leaveRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(4000, () => {
     console.log("KLU Server is Launch...");
 });
-

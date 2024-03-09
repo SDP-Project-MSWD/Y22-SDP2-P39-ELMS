@@ -12,30 +12,30 @@ import Profile from '../../Images/profile.png';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton component={RouterLink} to="/Home/dashboard">
+    <ListItemButton component={RouterLink} to="/manager/">
       <ListItemIcon>
-      <img src={Dashboard} alt='DashBoard Images'  className='avatar' style={{ width: '24px', height: '24px' }} />
+        <img src={Dashboard} alt='Dashboard Images' className='avatar' style={{ width: '24px', height: '24px' }} />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
     
     <ListItemButton component={RouterLink} to="/Home/attendance">
       <ListItemIcon>
-        <img src={Attendance} alt='DashBoard Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
+        <img src={Attendance} alt='Attendance Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
       </ListItemIcon>
       <ListItemText primary="Attendance" />
     </ListItemButton>
     
     <ListItemButton component={RouterLink} to="/Home/leaves">
       <ListItemIcon>
-        <img src={Leave} alt='DashBoard Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
+        <img src={Leave} alt='Leave Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
       </ListItemIcon>
       <ListItemText primary="Leaves" />
     </ListItemButton>
 
     <ListItemButton component={RouterLink} to="/Home/profile">
       <ListItemIcon>
-        <img src={Profile} alt='DashBoard Images' className='avatar' style={{ width: '24px', height: '24px' }} />
+        <img src={Profile} alt='Profile Images' className='avatar' style={{ width: '24px', height: '24px' }} />
       </ListItemIcon>
       <ListItemText primary="Profile" />
     </ListItemButton>
