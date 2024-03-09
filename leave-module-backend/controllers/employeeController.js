@@ -23,14 +23,13 @@ exports.setLeaveRequest = async (req, res) => {
             return res.status(400).json({ error: 'Duplicate leave request. Please check your dates.' });
           }
         // Create and save the new leave request
-        const leave = new Leave({ empID, leaveType, leaveReason, leaveStartDate, leaveEndDate });
+        const leave = new Leave({ empID, leaveType, leaveReason, leaveStartDate, leaveEndDate, leaveStatus: "In Progress" });
         await leave.save();
         
         // Return success message
         res.status(200).json({ message: "Leave request created successfully" });
     } catch (error) {
         // Handle any errors
-        console.error("Error:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 }
