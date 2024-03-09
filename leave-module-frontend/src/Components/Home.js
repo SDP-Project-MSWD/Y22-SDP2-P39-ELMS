@@ -98,7 +98,7 @@ export default function Home() {
       <div style={{paddingTop:'4%', paddingLeft:'10%',paddingRight:'10%'}}>
         <div>
           <center>
-            <h1 style={{fontSize:'60px'}}>LEAVE MANAGEMENT SYSTEM</h1>
+            <h1 style={{fontSize:'50px'}}>EMPLOYEE LEAVE MANAGEMENT SYSTEM</h1>
             <img src={HomePageImage} alt='HomePageImage' style={{width:'30%',height:'20%'}}></img>
           </center>
         </div>

@@ -8,12 +8,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function ForgotPassword() {
-    const navigate = useNavigate();
     const [data, setData] = useState({
         empID: "", 
         email: ""
@@ -24,15 +24,13 @@ export default function ForgotPassword() {
         const { empID, email } = data;
         try {
             const response = await axios.post('http://localhost:4000/auth/forgot-password', { empID, email });
-            console.log(response);
-            if(response.data.Status === "Success"){
-                if(response.data.role === 'Manager' || response.data.role === 'Team Lead' || response.data.role === 'Employee'){
-                    navigate('/dashboard');
-                }
-                else{
-                    navigate('/');
-                }
+            if (response.status === 200) {
+                toast.success("A reset password link has been successfully sent");
+                setData({ empID: "", email: "" });
+            } else {
+                toast.error("Error occurred while sending the link");
             }
+            console.log(response);
         } catch (error) {
             console.error(error);
         }

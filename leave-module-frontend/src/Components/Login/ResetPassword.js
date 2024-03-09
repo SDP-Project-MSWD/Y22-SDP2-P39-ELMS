@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const defaultTheme = createTheme();
 
@@ -21,14 +22,24 @@ export default function ResetPassword() {
         event.preventDefault();
         try {
             const response = await axios.post(`http://localhost:4000/auth/reset-password/${id}/${token}`, { password });
-            console.log(response);
-            if(response.data.Status === "Success"){
-                navigate("/signIn")
+    
+            if (response.status === 200) {
+                toast.success("The password has been changed successfully.");
+                setPassword('');
+                navigate('/signIn')
+            } else if (response.status === 401) {
+                toast.error("Token expired. Please try again.");
+                setPassword('');
+            } else if (response.status === 500) {
+                toast.error("Internal server error. Please try again later.");
+                setPassword('');
             }
+            console.log(response);
         } catch (error) {
             console.error(error);
         }
     };
+    
 
     return (
         <ThemeProvider theme={defaultTheme}>

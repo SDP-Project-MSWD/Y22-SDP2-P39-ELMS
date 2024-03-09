@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,26 +12,56 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {toast} from 'react-hot-toast';
+import { AuthContext } from '../../Token/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const navigate = useNavigate();
     const [data, setData] = useState({
         empID: "", 
         password: ""
     });
-
+    const userObj = useContext(AuthContext);
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { empID, password } = data;
         try {
             const response = await axios.post('http://localhost:4000/auth/login', { empID, password });
-            console.log(response.data);
+            if (response && response.status === 200) { // Check if response is defined
+                const { token } = response.data; // Access response data properly
+                const { designation } = response.data;
+                const empID = data.empID;
+                console.log(response.data);
+                userObj.login(token, empID);
+                sessionStorage.setItem("empID", empID);
+                sessionStorage.setItem('accessToken', token);
+                toast.success("Login successful");
+                if (designation === "Admin") {
+                    navigate('/admin');
+                } else if (designation === "Manager") {
+                    navigate('/manager');
+                } else if (designation === "Team Lead") {
+                    navigate('/teamLead');
+                } else if (designation === "Employee") {
+                    navigate('/employee');
+                }
+            } else {
+                console.log(response.data); // Log response data for debugging
+                toast.error("Error logging in"); // Display generic error message
+            }
         } catch (error) {
             console.error(error);
+            if (error.response && error.response.status === 401) {
+                toast.error("Invalid credentials or user is not active");
+            } else {
+                toast.error("Error logging in");
+            }
         }
     };
+    
 
     return (
         <ThemeProvider theme={defaultTheme}>
