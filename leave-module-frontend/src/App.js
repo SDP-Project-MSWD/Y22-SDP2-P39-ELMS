@@ -14,6 +14,9 @@ import HomeE from './Components/User/Employee/HomeE';
 
 //import for Admin
 import DashboardA from './Components/Admin/Admin Pages/DashboardA';
+import LeaveRequestA from './Components/Admin/Admin Pages/LeaveRequestA';
+import AddEmployee from './Components/Admin/Admin Pages/AddEmployee';
+import AllEmployees from './Components/Admin/Admin Pages/AllEmployees'; 
 
 //import for Manager 
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
@@ -42,6 +45,9 @@ function App() {
           <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
           <Route path="/admin/*" element={<HomeA />}>
             <Route path='' element={<DashboardA />} />
+            <Route path='leave-requests' element={<LeaveRequestA/>} />
+            <Route path='add-employee' element={<AddEmployee/>}/>
+            <Route path='all-employees' element={<AllEmployees/>} />
           </Route>
           <Route path="manager" element={<HomeM />}>
             <Route path='' element={<DashboardM />} />

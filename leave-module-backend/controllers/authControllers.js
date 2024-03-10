@@ -118,3 +118,45 @@ exports.resetPassword = async (req, res) => {
         }
     }
 };
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+      } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+      }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+      const empID = req.params.empID;
+      const updatedData = req.body;
+      const filter = { empID }; // Filter based on the userID field
+      const options = { new: true }; // Return the updated document
+      const user = await User.findOneAndUpdate(filter, updatedData, options);
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+      } else {
+        res.json(user);
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error updating user', error: error.toString() });
+    }
+  };
+  
+  exports.deleteUser = async (req, res) => {
+    try {
+      const empID = req.params.empID;
+      const filter = { empID }; // Filter based on the userID field
+      const deletedUser = await User.findOneAndDelete(filter);
+      if (!deletedUser) {
+        res.status(404).json({ message: 'User not found' });
+      } else {
+        res.json({ message: 'User deleted successfully' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting user', error: error.toString() });
+    }
+  };
+  
