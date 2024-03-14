@@ -2,12 +2,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const nodemailer = require("nodemailer");
-const { google } = require('googleapis');
+/*const { google } = require('googleapis');
 const api = require("../config/api");
 const OAuth2 = google.auth.OAuth2;
 
 const OAuth2_client = new OAuth2(api.clientId, api.clientSecret)
-OAuth2_client.setCredentials( { refresh_token: api.refreshToken } )
+OAuth2_client.setCredentials( { refresh_token: api.refreshToken } )*/
 
 exports.userRegister = async (req, res) => {
    try {
@@ -59,22 +59,28 @@ exports.userLogin = async (req, res) => {
         const token = jwt.sign({ userId: user._id, empID: user.empID }, process.env.JWT_SECRET, { expiresIn: '1h' });
         //console.log(token);
         const id = user._id;
-        const accessToken = OAuth2_client.getAccessToken()
+        //const accessToken = OAuth2_client.getAccessToken()
+        const sent_to = email;
+        const sent_from = process.env.EMAIL_USER;
+
         const transporter = nodemailer.createTransport({
-            service:  'gmail',
+            host: process.env.EMAIL_HOST,
+            PORT: "587",
             auth: {
-                type: 'OAuth2',
-                user: api.user,
-                clientId: api.clientId,
-                clientSecret: api.clientSecret,
-                refreshToken: api.refreshToken,
-                accessToken: accessToken
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+            tls: {
+                rejectUnauthorized: false,
             }
         });
 
         const mailOptions = {
-            from: `E.L.M.S <${api.user}>`,
-            to:  email,
+            from: {
+                name: "E.L.M.S - Forgot Password Link",
+                address: sent_from,
+            },
+            to:  sent_to,
             subject: 'Reset your password',
             text: `http://localhost:3000/reset-password/${id}/${token}`
         };
