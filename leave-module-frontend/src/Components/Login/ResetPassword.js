@@ -53,7 +53,7 @@ export default function ResetPassword() {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" marginTop="25%">
                         Reset Password
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

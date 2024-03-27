@@ -48,7 +48,7 @@ export default function ForgotPassword() {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" marginTop="25%">
                         Forgot Password
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -80,7 +80,7 @@ export default function ForgotPassword() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Send OTP
+                            Send Link
                         </Button>
                         <Grid container>
                             <Grid item>

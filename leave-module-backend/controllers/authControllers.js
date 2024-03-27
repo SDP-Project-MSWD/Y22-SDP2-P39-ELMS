@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
+const sendMail = require('../utils/sendMail');
 const nodemailer = require("nodemailer");
 /*const { google } = require('googleapis');
 const api = require("../config/api");
@@ -61,8 +62,12 @@ exports.userLogin = async (req, res) => {
         const id = user._id;
         //const accessToken = OAuth2_client.getAccessToken()
         const sent_to = email;
+        const reply_to = email;
         const sent_from = process.env.EMAIL_USER;
 
+        await sendMail(id, token, sent_from, sent_to, reply_to);
+        res.status(200).json({ success: true, message: "Email sent Successfully" });
+        /*
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
             PORT: "587",
@@ -95,10 +100,11 @@ exports.userLogin = async (req, res) => {
                 return res.status(200).send({msg:"A reset password link has been successfully"})
             }
             transporter.close()
-        });
+        });*/
     }
     catch(error){
-        return res.json(error)
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
 }
 
