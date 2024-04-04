@@ -12,7 +12,8 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { Link } from 'react-router-dom';
-import HomePageImage from './Images/homePage.jpeg';
+import HomePageImage from './Images/home2.png';
+import DisplayMembersInCards from './DisplayMembersInCards';
 
 export default function Home() {
   const [open, setOpen] = React.useState(false);
@@ -40,8 +41,8 @@ export default function Home() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
-            Skill Development Project
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            SKILL DEVELOPMENT PROJECT - 2
           </Typography> 
         <div>
           <IconButton
@@ -95,12 +96,18 @@ export default function Home() {
       </div>
         </Toolbar>
       </AppBar>
-      <div style={{paddingTop:'4%', paddingLeft:'10%',paddingRight:'10%'}}>
-        <div>
+      <div style={{borderStyle: "solid", borderWidth: "30px", borderColor: "white"}}>
+        <center>
+          <img src={HomePageImage} alt='HomePageImage' style={{width:'100%',height:'10%', paddingBottom:"5%"}}></img>
+        </center>
+        <div style={{paddingLeft: "3%"}}>
           <center>
-            <h1 style={{fontSize:'50px'}}>EMPLOYEE LEAVE MANAGEMENT SYSTEM</h1>
-            <img src={HomePageImage} alt='HomePageImage' style={{width:'30%',height:'20%'}}></img>
+          <Typography variant="h4" component="h2" align='left'>
+            About Us
+          </Typography>
+          <hr style={{border: "0", borderTop: "5px solid #ccc", height: "0", width: "100%"}} />
           </center>
+          <DisplayMembersInCards />
         </div>
       </div>
     </Box>

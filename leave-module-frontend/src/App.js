@@ -33,6 +33,11 @@ import DashboardE from './Components/User/Employee/Employee Pages/DashboardE';
 import LeaveE from './Components/User/Employee/Employee Pages/Leave';
 import LeaveStatusE from './Components/User/Employee/Employee Pages/LeaveStatus';
 
+//CopyRights
+import Copyright from './Components/Copyright';
+
+
+
 function App() {
   return (
     <AuthProvider>
@@ -68,6 +73,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Copyright />
     </AuthProvider>
   );
 }

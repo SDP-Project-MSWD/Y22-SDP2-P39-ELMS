@@ -46,7 +46,7 @@ export default function AddEmployee() {
           console.log("Employee created successfully:", response.data);
           //setStudentDetails({});
     
-          toast.success("Student created successfully");
+          toast.success("Employee created successfully");
 
           setEmployeeDetails({
             empID: "",

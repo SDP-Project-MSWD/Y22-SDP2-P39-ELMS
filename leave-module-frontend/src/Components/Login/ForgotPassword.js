@@ -46,6 +46,7 @@ export default function ForgotPassword() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        paddingBottom: '50%'
                     }}
                 >
                     <Typography component="h1" variant="h5" marginTop="25%">

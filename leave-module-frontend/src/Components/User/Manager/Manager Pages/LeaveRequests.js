@@ -10,6 +10,7 @@ import {
   Button,
   Container,
   Box,
+  Typography
 } from '@mui/material';
 import API from '../../../../Hooks/Api';
 
@@ -101,20 +102,30 @@ function LeaveRequests() {
   };
   return (
     <React.Fragment>
+      
       <Container maxWidth="lg">
-    <Box mt={4}>
-      <h2>In Progress Leaves</h2>
-      {renderTable(inProgressLeaves)}
-    </Box>
-    <Box mt={4}>
-      <h2>Accepted Leaves</h2>
-      {renderTable(acceptedLeaves)}
-    </Box>
-    <Box mt={4}>
-      <h2>Rejected Leaves</h2>
-      {renderTable(rejectedLeaves)}
-    </Box>
-  </Container>
+      <div style={{paddingTop: "0px",paddingBottom: "20px"}}>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            In Progress
+          </Typography>
+          {renderTable(inProgressLeaves)}
+        </Box>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            Accepted
+          </Typography>
+          {renderTable(acceptedLeaves)}
+        </Box>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            Rejected
+          </Typography>
+          {renderTable(rejectedLeaves)}
+        </Box>
+        </div>
+      </Container>
+      
     </React.Fragment>
   );
 }

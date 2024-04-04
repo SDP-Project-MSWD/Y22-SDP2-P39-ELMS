@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import API from '../../../../Hooks/Api';
 import { useAuth } from '../../../../Token/AuthContext';
 
@@ -29,8 +30,8 @@ function LeaveStatus() {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <Typography component="h1" variant="h5" gutterBottom style={{textAlign: 'center'}}>
+      <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+      <Typography component="h1" variant="h5" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
         Leave Status Table
       </Typography>
       <TableContainer component={Paper}>
@@ -61,7 +62,7 @@ function LeaveStatus() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+      </Box>
   );
 }
 
