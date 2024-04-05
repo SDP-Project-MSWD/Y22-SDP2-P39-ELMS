@@ -112,7 +112,7 @@ function HomeM() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Organization Name - Welcome {empID}
+              E L M S  - Welcome {empID}
             </Typography>
             {/* Add logout button */}
             <IconButton color="inherit" onClick={logoutFun} >

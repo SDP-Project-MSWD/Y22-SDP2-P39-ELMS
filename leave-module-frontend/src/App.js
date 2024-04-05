@@ -22,6 +22,7 @@ import AllEmployees from './Components/Admin/Admin Pages/AllEmployees';
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
 import LeaveM from './Components/User/Manager/Manager Pages/LeaveM';
 import LeaveRequestsM from './Components/User/Manager/Manager Pages/LeaveRequests';
+import LeaveStatusM from './Components/User/Manager/Manager Pages/LeaveStatus';
 
 //import for Team Lead
 import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL';
@@ -57,7 +58,7 @@ function App() {
           <Route path="manager" element={<HomeM />}>
             <Route path='' element={<DashboardM />} />
             <Route path='leaves' element={<LeaveM/>}/>
-            <Route path='leave-status' element={<LeaveStatusE />} />
+            <Route path='leave-status' element={<LeaveStatusM />} />
             <Route path='leave-requests' element={<LeaveRequestsM />} />
           </Route>
           <Route path="team-lead" element={<HomeTL />}>

@@ -8,8 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import API from '../../../../Hooks/Api';
 import { useAuth } from '../../../../Token/AuthContext';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CancelIcon from '@mui/icons-material/Cancel';
+import PendingIcon from '@mui/icons-material/Pending';
 
 function LeaveStatus() {
   const [leaveData, setLeaveData] = React.useState([]);
@@ -18,7 +22,7 @@ function LeaveStatus() {
     // Fetch leave data from backend
     API.get(`http://localhost:4000/employee/${empID}`)
       .then(response => {
-        setLeaveData(response.data);
+        setLeaveData(response.data.reverse());
       })
       .catch(error => {
         console.error('Error fetching leave data:', error);
@@ -30,7 +34,8 @@ function LeaveStatus() {
   }
 
   return (
-      <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+    <Container maxWidth="lg">
+    <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
       <Typography component="h1" variant="h5" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
         Leave Status Table
       </Typography>
@@ -38,12 +43,12 @@ function LeaveStatus() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>S.No</TableCell>
-              <TableCell align="right">Leave Type</TableCell>
-              <TableCell align="right">Leave Reason</TableCell>
-              <TableCell align="right">Start Date</TableCell>
-              <TableCell align="right">End Date</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell style={{fontSize: "17px"}}><b>S.No</b></TableCell>
+              <TableCell align="left" style={{fontSize: "17px"}}><b>Leave Type</b></TableCell>
+              <TableCell align="left" style={{fontSize: "17px"}}><b>Leave Reason</b></TableCell>
+              <TableCell align="left" style={{fontSize: "17px"}}><b>Start Date</b></TableCell>
+              <TableCell align="left" style={{fontSize: "17px"}}><b>End Date</b></TableCell>
+              <TableCell align="left" style={{fontSize: "17px"}}><b>Status</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -52,17 +57,28 @@ function LeaveStatus() {
                 <TableCell component="th" scope="row">
                   {index + 1}
                 </TableCell>
-                <TableCell align="right">{row.leaveType}</TableCell>
-                <TableCell align="right">{row.leaveReason}</TableCell>
-                <TableCell align="right">{row.leaveStartDate}</TableCell>
-                <TableCell align="right">{row.leaveEndDate}</TableCell>
-                <TableCell align="right">{row.leaveStatus}</TableCell>
+                <TableCell align="left">{row.leaveType}</TableCell>
+                <TableCell align="left">{row.leaveReason}</TableCell>
+                <TableCell align="left">{row.leaveStartDate}</TableCell>
+                <TableCell align="left">{row.leaveEndDate}</TableCell>
+                <TableCell align="left">
+                {row.leaveStatus === 'Accepted' && (
+                      <span><CheckBoxIcon /></span>
+                  )}
+                  {row.leaveStatus === 'Rejected' && (
+                      <span><CancelIcon /></span>
+                  )}
+                  {row.leaveStatus === 'In Progress' && (
+                      <span><PendingIcon /></span>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      </Box>
+    </Box>
+    </Container>
   );
 }
 
