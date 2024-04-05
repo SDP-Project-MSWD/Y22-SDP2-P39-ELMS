@@ -20,19 +20,19 @@ import AllEmployees from './Components/Admin/Admin Pages/AllEmployees';
 
 //import for Manager 
 import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
-import LeaveM from './Components/User/Manager/Manager Pages/LeaveM';
-import LeaveRequestsM from './Components/User/Manager/Manager Pages/LeaveRequests';
-import LeaveStatusM from './Components/User/Manager/Manager Pages/LeaveStatus';
+import LeaveM from './Components/LeavePages/Leave';
+import LeaveRequestsM from './Components/LeavePages/LeaveRequests';
+import LeaveStatusM from './Components/LeavePages/LeaveStatus';
 
 //import for Team Lead
 import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL';
-import LeaveTL from './Components/User/Team Lead/Team Lead Pages/LeaveTL';
-import LeaveRequestsTL from './Components/User/Team Lead/Team Lead Pages/LeaveRequests';
+import LeaveTL from './Components/LeavePages/Leave';
+import LeaveRequestsTL from './Components/LeavePages/LeaveRequests';
 
 //import for  Employee
 import DashboardE from './Components/User/Employee/Employee Pages/DashboardE';
-import LeaveE from './Components/User/Employee/Employee Pages/Leave';
-import LeaveStatusE from './Components/User/Employee/Employee Pages/LeaveStatus';
+import LeaveE from './Components/LeavePages/Leave';
+import LeaveStatusE from './Components/LeavePages/LeaveStatus';
 
 //CopyRights
 import Copyright from './Components/Copyright';

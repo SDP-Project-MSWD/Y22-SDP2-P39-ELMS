@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../../../Token/AuthContext';
+import { useAuth } from '../../Token/AuthContext';
 import { FormControl, InputLabel, Select, MenuItem, Button, CssBaseline, TextField, Grid, Box, Typography, Container, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import API from '../../../../Hooks/Api';
+import API from "../../Hooks/Api";
 import toast from 'react-hot-toast';
 
 const defaultTheme = createTheme();
@@ -81,9 +81,9 @@ const Leave = () => {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography component="h1" variant="h5">
-            Leave Request
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+        <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '10px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            Apply Leave
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2} justifyContent="center">
@@ -92,7 +92,7 @@ const Leave = () => {
                   required
                   fullWidth
                   id="empID"
-                  label="Employee ID"
+                  label="Manager ID" // You may need a different label here
                   name="empID"
                   autoComplete="empID"
                   value={leaveDetails.empID}

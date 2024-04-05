@@ -1,30 +1,12 @@
 const Leave = require('../models/Leave');
 
-exports.getInProgess = async (req, res) => {
-    try {
-        const acceptedLeaves = await Leave.find({ leaveStatus: 'In Progress' });
-        res.json(acceptedLeaves);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-exports.getAccepted = async (req, res) => {
-    try {
-        const acceptedLeaves = await Leave.find({ leaveStatus: 'Accepted' });
-        res.json(acceptedLeaves);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
-
-exports.getRejected = async (req, res) => {
-    try {
-        const rejectedLeaves = await Leave.find({ leaveStatus: 'Rejected' });
-        res.json(rejectedLeaves);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+exports.getAllLevaes = async (req,res) => {
+  try{
+    const allLeaves = await Leave.find({ leaveStatus: { $in: ['In Progress', 'Rejected', 'Accepted'] } });
+    res.json(allLeaves);
+  }catch(error){
+    res.status(500).json({message: error.message});
+  }
 }
 
 exports.acceptALeaveRequest = async (req, res) => {

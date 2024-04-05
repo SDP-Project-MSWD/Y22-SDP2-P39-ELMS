@@ -12,32 +12,54 @@ import {
   Box,
   Typography
 } from '@mui/material';
-import API from '../../../../Hooks/Api';
+import API from '../../Hooks/Api';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useAuth } from '../../Token/AuthContext';
 
 function LeaveRequests() {
   const [inProgressLeaves, setInProgressLeaves] = useState([]);
   const [acceptedLeaves, setAcceptedLeaves] = useState([]);
   const [rejectedLeaves, setRejectedLeaves] = useState([]);
+  const { empID } = useAuth();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }); 
 
     const fetchData = async () => {
         try {
-          const inProgressResponse = await API.get('http://localhost:4000/manager/leave/inprogress');
-          const acceptedResponse = await API.get('http://localhost:4000/manager/leave/accepted');
-          const rejectedResponse = await API.get('http://localhost:4000/manager/leave/rejected');
+          const getAllLeaves = await API.get('http://localhost:4000/manager/leave/getAllLeaves');
       
+          let filteredInProgressLeaves = [];
+          let filteredAcceptedLeaves = [];
+          let filteredRejectedLeaves = [];
           // Filter out employee IDs starting with 'M'
-          const filteredInProgressLeaves = inProgressResponse.data.filter((leave) => !leave.empID.startsWith('M'));
-          const filteredAcceptedLeaves = acceptedResponse.data.filter((leave) => !leave.empID.startsWith('M'));
-          const filteredRejectedLeaves = rejectedResponse.data.filter((leave) => !leave.empID.startsWith('M'));
-      
+          if(empID.startsWith('M')){
+            filteredInProgressLeaves = getAllLeaves.data.filter(leave => {
+              return !leave.empID.startsWith('M') && leave.leaveStatus === 'In Progress';
+            });
+            filteredAcceptedLeaves = getAllLeaves.data.filter(leave => {
+              return !leave.empID.startsWith('M') && leave.leaveStatus === 'Accepted';
+            });
+            filteredRejectedLeaves = getAllLeaves.data.filter(leave => {
+              return !leave.empID.startsWith('M') && leave.leaveStatus === 'Rejected';
+            });
+          }
+          else if(empID.startsWith('T')){
+            filteredInProgressLeaves = getAllLeaves.data.filter(leave => {
+              return leave.empID.startsWith('E') && leave.leaveStatus === 'In Progress';
+            });
+            filteredAcceptedLeaves = getAllLeaves.data.filter(leave => {
+              return leave.empID.startsWith('E') && leave.leaveStatus === 'Accepted';
+            });
+            filteredRejectedLeaves = getAllLeaves.data.filter(leave => {
+              return leave.empID.startsWith('E') && leave.leaveStatus === 'Rejected';
+            });
+          }
+          
           setInProgressLeaves(filteredInProgressLeaves.reverse());
           setAcceptedLeaves(filteredAcceptedLeaves.reverse());
           setRejectedLeaves(filteredRejectedLeaves.reverse());
@@ -115,26 +137,25 @@ function LeaveRequests() {
       <Container maxWidth="lg">
       <div style={{paddingTop: "0px",paddingBottom: "20px"}}>
         <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
-          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-            In Progress
+        <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+           <b> In Progress</b>
           </Typography>
           {renderTable(inProgressLeaves)}
         </Box>
         <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
-          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-            Accepted
+        <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            <b>Accepted Leaves</b>
           </Typography>
           {renderTable(acceptedLeaves)}
         </Box>
         <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
-          <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-            Rejected
+        <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            <b>Rejected Leaves</b>
           </Typography>
           {renderTable(rejectedLeaves)}
         </Box>
         </div>
       </Container>
-      
     </React.Fragment>
   );
 }

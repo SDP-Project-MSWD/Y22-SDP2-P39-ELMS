@@ -24,15 +24,17 @@ function LeaveRequestA() {
 
     const fetchData = async () => {
         try {
-          const inProgressResponse = await API.get('http://localhost:4000/manager/leave/inprogress');
-          const acceptedResponse = await API.get('http://localhost:4000/manager/leave/accepted');
-          const rejectedResponse = await API.get('http://localhost:4000/manager/leave/rejected');
+          const getAllLeaves = await API.get('http://localhost:4000/manager/leave/getAllLeaves');
       
           // Filter out employee IDs starting with 'M
+          const inProgressResponse = getAllLeaves.data.filter((leave) => leave.leaveStatus === "In Progress");
+          const acceptedResponse = getAllLeaves.data.filter((leave) => leave.leaveStatus === "Aceepted")
+          const rejectedResponse = getAllLeaves.data.filter((leave) => leave.leaveStatus === "Rejected")
       
-          setInProgressLeaves(inProgressResponse.data);
-          setAcceptedLeaves(acceptedResponse.data);
-          setRejectedLeaves(rejectedResponse.data);
+      
+          setInProgressLeaves(inProgressResponse.reverse());
+          setAcceptedLeaves(acceptedResponse.reverse());
+          setRejectedLeaves(rejectedResponse.reverse());
         } catch (error) {
           console.error('Error fetching leave requests:', error);
         }
