@@ -14,7 +14,7 @@ import HomeE from './Components/User/Employee/HomeE';
 
 //import for Admin
 import DashboardA from './Components/Admin/Admin Pages/DashboardA';
-import LeaveRequestA from './Components/Admin/Admin Pages/LeaveRequestA';
+import LeaveRequestA from './Components/LeavePages/LeaveRequests';
 import AddEmployee from './Components/Admin/Admin Pages/AddEmployee';
 import AllEmployees from './Components/Admin/Admin Pages/AllEmployees'; 
 
@@ -36,6 +36,7 @@ import LeaveStatusE from './Components/LeavePages/LeaveStatus';
 
 //CopyRights
 import Copyright from './Components/Copyright';
+import Profile from './Components/Profile';
 
 
 
@@ -54,23 +55,27 @@ function App() {
             <Route path='leave-requests' element={<LeaveRequestA/>} />
             <Route path='add-employee' element={<AddEmployee/>}/>
             <Route path='all-employees' element={<AllEmployees/>} />
+            <Route path='profile' element={<Profile />} />
           </Route>
           <Route path="manager" element={<HomeM />}>
             <Route path='' element={<DashboardM />} />
             <Route path='leaves' element={<LeaveM/>}/>
             <Route path='leave-status' element={<LeaveStatusM />} />
             <Route path='leave-requests' element={<LeaveRequestsM />} />
+            <Route path='profile' element={<Profile />} />
           </Route>
           <Route path="team-lead" element={<HomeTL />}>
             <Route path='' element={<DashboardTL />} />
             <Route path='leaves' element={<LeaveTL/>}/>
             <Route path='leave-status' element={<LeaveStatusE />} />
             <Route path='leave-requests' element={<LeaveRequestsTL />} />
+            <Route path='profile' element={<Profile />} />
           </Route>
           <Route path="employee" element={<HomeE />}>
             <Route path='' element={<DashboardE />} />
             <Route path='leaves' element={<LeaveE />} />
             <Route path='leave-status' element={<LeaveStatusE />} />
+            <Route path='profile' element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -172,3 +172,20 @@ exports.updateUser = async (req, res) => {
     }
   };
   
+
+exports.getProfile = async (req, res) => {
+    try {
+        const empID = req.params.empID;
+        const profileDetails = await User.findOne({ empID: empID });
+        
+        if(!profileDetails){
+            res.status(401).json({message:"Employee is not registered"});
+        }
+        else{
+            res.status(201).json(profileDetails);
+        }
+    }
+    catch(error){
+        res.status(500).json({message:"Internal Server Error", error : error});
+    }
+}

@@ -62,7 +62,7 @@ export const mainListItems = (
 
     <LeaveSubMenu />
 
-    <ListItemButton component={RouterLink} to="/Home/profile">
+    <ListItemButton component={RouterLink} to="/employee/profile">
       <ListItemIcon>
         <img src={Profile} alt='Profile Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
       </ListItemIcon>

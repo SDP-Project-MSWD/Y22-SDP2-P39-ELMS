@@ -10,5 +10,6 @@ router.delete('/:empID', verifyToken, authController.deleteUser);
 router.post('/login', authController.userLogin);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password/:id/:token',authController.resetPassword);
+router.get('/profile/:empID', verifyToken , authController.getProfile) ;
 
 module.exports = router;

@@ -59,6 +59,17 @@ function LeaveRequests() {
               return leave.empID.startsWith('E') && leave.leaveStatus === 'Rejected';
             });
           }
+          else if(empID.startsWith('A')){
+            filteredInProgressLeaves = getAllLeaves.data.filter(leave => {
+              return leave.leaveStatus === 'In Progress';
+            });
+            filteredAcceptedLeaves = getAllLeaves.data.filter(leave => {
+              return leave.leaveStatus === 'Accepted';
+            });
+            filteredRejectedLeaves = getAllLeaves.data.filter(leave => {
+              return leave.leaveStatus === 'Rejected';
+            });
+          }
           
           setInProgressLeaves(filteredInProgressLeaves.reverse());
           setAcceptedLeaves(filteredAcceptedLeaves.reverse());
