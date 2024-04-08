@@ -36,9 +36,9 @@ function LeaveStatus() {
 
   return (
     <Container maxWidth="lg">
-    <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
-      <Typography component="h1" variant="h5" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-        Leave Status Table
+    <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 50px #b4c5e4' }}>
+      <Typography component="h2" variant="h6" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+        <b>Leave Status Table</b>
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

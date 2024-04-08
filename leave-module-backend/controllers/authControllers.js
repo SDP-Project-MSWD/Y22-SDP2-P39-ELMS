@@ -3,12 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const sendMail = require('../utils/sendMail');
 const nodemailer = require("nodemailer");
-/*const { google } = require('googleapis');
-const api = require("../config/api");
-const OAuth2 = google.auth.OAuth2;
-
-const OAuth2_client = new OAuth2(api.clientId, api.clientSecret)
-OAuth2_client.setCredentials( { refresh_token: api.refreshToken } )*/
 
 exports.userRegister = async (req, res) => {
    try {
@@ -67,40 +61,6 @@ exports.userLogin = async (req, res) => {
 
         await sendMail(id, token, sent_from, sent_to, reply_to);
         res.status(200).json({ success: true, message: "Email sent Successfully" });
-        /*
-        const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            PORT: "587",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-            tls: {
-                rejectUnauthorized: false,
-            }
-        });
-
-        const mailOptions = {
-            from: {
-                name: "E.L.M.S - Forgot Password Link",
-                address: sent_from,
-            },
-            to:  sent_to,
-            subject: 'Reset your password',
-            text: `http://localhost:3000/reset-password/${id}/${token}`
-        };
-
-        transporter.sendMail(mailOptions , function(error, result){
-            if (error) {
-                console.log('Error occurred');
-                console.log(error.message); // Changed 'err' to 'error'
-                return res.status(400).send({msg:`Error occured while sending the link`});
-            }
-            else{
-                return res.status(200).send({msg:"A reset password link has been successfully"})
-            }
-            transporter.close()
-        });*/
     }
     catch(error){
         console.error(error);
@@ -183,6 +143,25 @@ exports.getProfile = async (req, res) => {
         }
         else{
             res.status(201).json(profileDetails);
+        }
+    }
+    catch(error){
+        res.status(500).json({message:"Internal Server Error", error : error});
+    }
+}
+
+exports.editProfile = async (req,res) => {
+    try{
+        const empID = req.params.empID;
+        const editProfile = req.body;
+        const filter = { empID: empID};
+        const options = { new: true};
+        const  updatedProfile = await User.findOneAndUpdate(filter, editProfile, options);
+        if(!updatedProfile){
+            res.status(404).json({message:"No employee with this id was found"});
+        }
+        else{
+            res.status(201).json(updatedProfile);
         }
     }
     catch(error){

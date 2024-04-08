@@ -6,6 +6,7 @@ const db = require("./config/db");
 const authRoutes = require('./routes/authRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const managerRoutes = require('./routes/managerRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes')
 
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
@@ -27,6 +28,7 @@ db.once('open', () => {
 app.use('/auth', authRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/manager',managerRoutes);
+app.use('/user',dashboardRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

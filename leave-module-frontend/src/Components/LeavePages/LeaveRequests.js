@@ -147,19 +147,19 @@ function LeaveRequests() {
     <React.Fragment>
       <Container maxWidth="lg">
       <div style={{paddingTop: "0px",paddingBottom: "20px"}}>
-        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 50px #b4c5e4' }}>
         <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
            <b> In Progress</b>
           </Typography>
           {renderTable(inProgressLeaves)}
         </Box>
-        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 50px #b4c5e4' }}>
         <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
             <b>Accepted Leaves</b>
           </Typography>
           {renderTable(acceptedLeaves)}
         </Box>
-        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4, boxShadow: '0 0 50px #b4c5e4' }}>
         <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
             <b>Rejected Leaves</b>
           </Typography>

@@ -81,9 +81,9 @@ const Leave = () => {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3, boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)' }}>
-        <Typography component="h1" variant="h5" sx={{ backgroundColor: '#b4c5e4', padding: '10px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-            Apply Leave
+        <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3, boxShadow: '0 0 50px #b4c5e4' }}>
+        <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '10px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+            <b>Apply Leave</b>
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2} justifyContent="center">
@@ -114,7 +114,6 @@ const Leave = () => {
                     <MenuItem value="EARNED">EARNED</MenuItem>
                     <MenuItem value="CASUAL">CASUAL</MenuItem>
                     <MenuItem value="SPECIAL">SPECIAL</MenuItem>
-                    <MenuItem value="MATERNAL">MATERNAL</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

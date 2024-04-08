@@ -19,18 +19,18 @@ import AddEmployee from './Components/Admin/Admin Pages/AddEmployee';
 import AllEmployees from './Components/Admin/Admin Pages/AllEmployees'; 
 
 //import for Manager 
-import DashboardM from './Components/User/Manager/Manager Pages/DashboardM';
+import DashboardM from './Components/User/Dashboard';
 import LeaveM from './Components/LeavePages/Leave';
 import LeaveRequestsM from './Components/LeavePages/LeaveRequests';
 import LeaveStatusM from './Components/LeavePages/LeaveStatus';
 
 //import for Team Lead
-import DashboardTL from './Components/User/Team Lead/Team Lead Pages/DashboardTL';
+import DashboardTL from './Components/User/Dashboard';
 import LeaveTL from './Components/LeavePages/Leave';
 import LeaveRequestsTL from './Components/LeavePages/LeaveRequests';
 
 //import for  Employee
-import DashboardE from './Components/User/Employee/Employee Pages/DashboardE';
+import DashboardE from './Components/User/Dashboard';
 import LeaveE from './Components/LeavePages/Leave';
 import LeaveStatusE from './Components/LeavePages/LeaveStatus';
 

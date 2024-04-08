@@ -11,6 +11,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 function stringToColor(string) {
     let hash = 0;
@@ -48,6 +49,45 @@ const Profile = () => {
     const [profileDetails, setProfileDetails] = useState({});
     const [name, setName] = useState('');
     const { empID } = useAuth();
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [editedFirstName, setEditedFirstName] = useState('');
+    const [editedLastName, setEditedLastName] = useState('');
+    const [editedDob, setEditedDob] = useState('');
+    const [editedPhone, setEditedPhone] = useState('');
+    const [editedEmail, setEditedEmail] = useState('');
+    const [updateTrigger, setUpdateTrigger] = useState(false);
+
+    const handleEditDialogOpen = (profile) => {
+        setEditedFirstName(profile.firstName);
+        setEditedLastName(profile.lastName);
+        setEditedDob(profile.dob);
+        setEditedPhone(profile.phone);
+        setEditedEmail(profile.email);
+        setIsEditDialogOpen(true);
+    };
+
+    const handleEditDialogClose = () => {
+        setIsEditDialogOpen(false);
+    };
+
+    const handleEditSubmit = async () => {
+        try{
+            await API.put(`http://localhost:4000/auth/profile/${empID}`, {
+                email: editedEmail,
+                firstName: editedFirstName,
+                lastName: editedLastName,
+                dob: editedDob,
+                phone: editedPhone
+            });
+            setUpdateTrigger(!updateTrigger);
+            setIsEditDialogOpen(false);
+            toast.success("Profile details updated successfully!");
+        }
+        catch(error){
+            console.error('Error updating student:', error);
+            toast.error("Error updating student details");
+        }
+    }
 
     useEffect(() => {
         try {
@@ -63,11 +103,14 @@ const Profile = () => {
         } catch (error) {
             toast.error("Internal Server Error");
         }
-    }, [empID]);
+    }, [empID, updateTrigger]);
 
     return (
         <Box sx={{ flexGrow: 1, m: 5 }}>
             <Grid container spacing={2}>
+                <Typography component="h2" variant="h6" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+                    <b>Profile Details</b>
+                </Typography>
                 <Grid item xs={12} md={4}>
                     <Card sx={{ maxWidth: 345, boxShadow: '0 0 50px #b4c5e4', m: 2 }}>
                         <CardMedia>
@@ -89,12 +132,60 @@ const Profile = () => {
                             </Typography>
                         </CardContent>
                         <CardActions sx={{ justifyContent: 'center' }}>
-                            <Button type="submit" fullWidth variant="contained" sx={{ m: 2 }}>
+                            <Button type="submit" fullWidth variant="contained" sx={{ m: 2 }} onClick={() => handleEditDialogOpen(profileDetails)}>
                                 Edit
                             </Button>
                         </CardActions>
                     </Card>
                 </Grid>
+                <Dialog open={isEditDialogOpen} onClose={handleEditDialogClose}>
+                <DialogTitle>
+                    <Typography component="h1" variant="h5" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+                        Edit Profile Details
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    <TextField
+                        margin="normal"
+                        label="Name"
+                        fullWidth
+                        value={editedFirstName}
+                        onChange={(e) => setEditedFirstName(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        label="Name"
+                        fullWidth
+                        value={editedLastName}
+                        onChange={(e) => setEditedLastName(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        label="CGPA"
+                        fullWidth
+                        value={editedDob}
+                        onChange={(e) => setEditedDob(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        label="Mobile Number"
+                        fullWidth
+                        value={editedPhone}
+                        onChange={(e) => setEditedPhone(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        label="Email"
+                        fullWidth
+                        value={editedEmail}
+                        onChange={(e) => setEditedEmail(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleEditDialogClose}>Cancel</Button>
+                    <Button onClick={handleEditSubmit} color="primary">Save</Button>
+                </DialogActions>
+            </Dialog>
                 <Grid item xs={12} md={8}>
                     <Card sx={{ maxWidth: 700, m: 2, boxShadow: '0 0 50px #b4c5e4' }}>
                         <CardContent>
