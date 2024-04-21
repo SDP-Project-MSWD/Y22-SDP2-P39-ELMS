@@ -19,7 +19,8 @@ const Dashboard = () => {
     const { empID } = useAuth();
     const [totalLeaves, setTotalLeaves] = useState({ inProgress: 0, accepted: 0, rejected: 0 });
     const [totalTypeLeaves, setTotalTypeLeaves] = useState ({ SICK: 0, EARNED: 0, CASUAL: 0, SPECIAL: 0  })
-    const [leavesTaken, setLeavesTaken] = useState(0);
+    //const [leavesTaken, setLeavesTaken] = useState(0);
+    const [leavesCountTotal, setLeavesCountTotal ] = useState(0);
     const [recentLeaves, setRecentLeaves] = useState([]);
     const [leaveLimits, setLeaveLimits] = useState({ SICK: 0, EARNED: 0, CASUAL: 0, SPECIAL: 0 });
     
@@ -29,8 +30,9 @@ const Dashboard = () => {
                 .then((response) => {
                     setTotalLeaves(response.data.totalLeavesApplied);
                     setTotalTypeLeaves(response.data.typeLeaves);
-                    setLeavesTaken(response.data.leavesTakenThisMonth);
+                    //setLeavesTaken(response.data.leavesTakenThisMonth);
                     setRecentLeaves(response.data.leavesAppliedThisMonth);
+                    setLeavesCountTotal(response.data.leavesCountTotal);
                     setLeaveLimits(response.data.leaveLimits);
                 })
                 .catch((error) => {
@@ -61,7 +63,7 @@ const Dashboard = () => {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell align="left" sx={{ pl: 5, fontSize:"17px" }}>{leavesTaken}</TableCell>
+                                <TableCell align="left" sx={{ pl: 5, fontSize:"17px" }}>{leavesCountTotal}</TableCell>
                                 <TableCell align="left" sx={{ pl: 5, fontSize: "17px" }}>{totalLeaves.accepted}</TableCell>
                                 <TableCell align="left" sx={{ pl: 5, fontSize: "17px" }}>{totalLeaves.rejected}</TableCell>
                                 <TableCell align="left" sx={{ pl: 5, fontSize: "17px" }}>{totalLeaves.inProgress}</TableCell>
@@ -87,8 +89,8 @@ const Dashboard = () => {
                                 {recentLeaves.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell align="left">{row.leaveType}</TableCell>
-                                        <TableCell align="left">{row.leaveStartDate}</TableCell>
-                                        <TableCell align="left">{row.leaveEndDate}</TableCell>
+                                        <TableCell align="left">{new Date(row.leaveStartDate).toLocaleDateString()}</TableCell>
+                                        <TableCell align="left">{new Date(row.leaveEndDate).toLocaleDateString()}</TableCell>
                                         <TableCell align="left">
                                         {row.leaveStatus === 'Accepted' && (
                                             <span><CheckBoxIcon /></span>

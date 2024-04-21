@@ -60,8 +60,8 @@ function LeaveStatus() {
                 </TableCell>
                 <TableCell align="left">{row.leaveType}</TableCell>
                 <TableCell align="left">{row.leaveReason}</TableCell>
-                <TableCell align="left">{row.leaveStartDate}</TableCell>
-                <TableCell align="left">{row.leaveEndDate}</TableCell>
+                <TableCell align="left">{new Date(row.leaveStartDate).toLocaleDateString()}</TableCell>
+                <TableCell align="left">{new Date(row.leaveEndDate).toLocaleDateString()}</TableCell>
                 <TableCell align="left">
                 {row.leaveStatus === 'Accepted' && (
                       <span><CheckBoxIcon /></span>

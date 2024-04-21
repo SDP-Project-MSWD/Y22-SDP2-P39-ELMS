@@ -45,6 +45,8 @@ exports.getDashboardData = async (req, res) => {
         };
 
         const leaves = await Leave.find({ empID: empID});
+
+        const leavesCountTotal = await Leave.countDocuments({ empID: empID });
         //console.log(leaves);
         // Combine all data into one JSON object
         const dashboardData = {
@@ -54,13 +56,14 @@ exports.getDashboardData = async (req, res) => {
                 rejected: totalLeaves.find(item => item._id === "Rejected")?.count || 0
             },
             typeLeaves: {
-                SICK: leaves.filter(item => item.leaveType === "SICK").length || 0,
-                EARNED: leaves.filter(item => item.leaveType === "EARNED").length || 0,
-                CASUAL: leaves.filter(item => item.leaveType === "CASUAL").length || 0,
-                SPECIAL: leaves.filter(item => item.leaveType === "SPECIAL").length || 0,
+                SICK: leaves.filter(item => item.leaveType === "SICK" && (item.leaveStatus === "In Progress" || item.leaveStatus === "Accepted")).length || 0,
+                EARNED: leaves.filter(item => item.leaveType === "EARNED" && (item.leaveStatus === "In Progress" || item.leaveStatus === "Accepted")).length || 0,
+                CASUAL: leaves.filter(item => item.leaveType === "CASUAL" && (item.leaveStatus === "In Progress" || item.leaveStatus === "Accepted")).length || 0,
+                SPECIAL: leaves.filter(item => item.leaveType === "SPECIAL" && (item.leaveStatus === "In Progress" || item.leaveStatus === "Accepted")).length || 0,
             },
             leavesTakenThisMonth,
             leavesAppliedThisMonth,
+            leavesCountTotal,
             leaveLimits
         };
         // Return the dashboard data as JSON object

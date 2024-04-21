@@ -119,8 +119,8 @@ function LeaveRequests() {
                 <TableCell style={{textAlign:"left"}}>{row.empID}</TableCell>
                 <TableCell style={{textAlign:"left"}}>{row.leaveType}</TableCell>
                 <TableCell style={{textAlign:"left"}}>{row.leaveReason}</TableCell>
-                <TableCell style={{textAlign:"left"}}>{row.leaveStartDate}</TableCell>
-                <TableCell style={{textAlign:"left"}}>{row.leaveEndDate}</TableCell>
+                <TableCell style={{textAlign:"left"}}>{new Date(row.leaveStartDate).toLocaleDateString()}</TableCell>
+                <TableCell style={{textAlign:"left"}}>{new Date(row.leaveEndDate).toLocaleDateString()}</TableCell>
                 <TableCell style={{textAlign:"left"}}>{row.leaveStatus}</TableCell>
                 <TableCell>
                   {row.leaveStatus === 'In Progress' && (

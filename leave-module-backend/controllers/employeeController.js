@@ -11,7 +11,7 @@ exports.setLeaveRequest = async (req, res) => {
     try {
         const { empID, leaveType, leaveReason, leaveStartDate, leaveEndDate } = req.body;
 
-        // Convert string dates to Date objects
+        // Convert string dates to Date objects in the format YYYY-MM-DD
         const startDate = new Date(leaveStartDate);
         const endDate = new Date(leaveEndDate);
 
@@ -20,19 +20,25 @@ exports.setLeaveRequest = async (req, res) => {
             return res.status(400).json({ error: "Leave start date must be before leave end date" });
         }
 
-        // Check if there is an existing leave request for the same employee and overlapping dates
-        const existingLeave = await Leave.findOne({
+        const overlappingLeave = await Leave.findOne({
             empID,
-            leaveStartDate: { $lte: endDate },
-            leaveEndDate: { $gte: startDate },
-            leaveStatus: "Accepted"
+            leaveStatus: "Accepted",
+            $or: [
+                {
+                    leaveStartDate: { $lte: endDate },
+                    leaveEndDate: { $gte: startDate }
+                },
+                {
+                    leaveStartDate: { $gte: startDate, $lte: endDate }
+                }
+            ]
         });
 
-        if (existingLeave) {
-            return res.status(400).json({ error: 'Duplicate leave request or overlapping dates. Please check your dates.' });
+        if (overlappingLeave) {
+            return res.status(400).json({ error: "You have already applied for leave within the same range which has been accepted" });
         }
 
-        // Check leave limits
+        // Check leave limits for the particular leave type
         const leavesThisYear = await Leave.countDocuments({
             empID,
             leaveType,
@@ -40,35 +46,38 @@ exports.setLeaveRequest = async (req, res) => {
             leaveStatus: "Accepted"
         });
 
-        if (leaveType !== "SICK" && leavesThisYear >= leaveLimits[leaveType]) {
+        if (leavesThisYear >= leaveLimits[leaveType]) {
             return res.status(400).json({ error: `You have reached the limit for ${leaveType} leaves this year` });
         }
 
         // Check if the leave is casual and it exceeds 3 leaves in a month
-        if (leaveType === "CASUAL") {
+        if (leaveType !== "SICK" && leaveType === "CASUAL") {
             // Calculate the start and end dates for the current month
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             const currentMonth = currentDate.getMonth() + 1;
-            const firstDayOfMonth = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-01`;
-            const lastDayOfMonth = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${new Date(currentYear, currentMonth, 0).getDate()}`;
-        
-            // Count the number of casual leaves taken in the current month
+            const firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1);
+            const lastDateOfMonth = getLastDayOfMonth(currentYear, currentMonth - 1);
+            const lastDayOfMonth = new Date(currentYear, currentMonth - 1, lastDateOfMonth);
+            
+            // Count the total leaves taken in the current month for all leave types other than SICK
             const leavesThisMonth = await Leave.countDocuments({
                 empID,
-                leaveType: "CASUAL",
+                leaveType: { $ne: "SICK" },
                 leaveStartDate: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
-                leaveStatus: "Accepted"
+                leaveStatus: { $in: ["Accepted", "In Progress"] }
             });
-        
+
+            // Check if total leaves taken in the month exceed 3
             if (leavesThisMonth >= 3) {
-                return res.status(400).json({ error: "You cannot apply for more than 3 casual leaves in a month" });
+                return res.status(400).json({ error: "You cannot apply for more than 3 leaves in a month" });
             }
         }
+
         // Create and save the new leave request
-        const leave = new Leave({ empID, leaveType, leaveReason, leaveStartDate, leaveEndDate, leaveStatus: "In Progress" });
+        const leave = new Leave({ empID, leaveType, leaveReason, leaveStartDate: startDate, leaveEndDate: endDate, leaveStatus: "In Progress" });
         await leave.save();
-        
+
         // Return success message
         res.status(200).json({ message: "Leave request created successfully" });
     } catch (error) {
@@ -77,6 +86,7 @@ exports.setLeaveRequest = async (req, res) => {
         res.status(500).json({ error: "Internal server error", error: error.toString() });
     }
 }
+
 
 exports.getLeaveRequests = async (req, res) => {
     try {
@@ -92,3 +102,14 @@ exports.getLeaveRequests = async (req, res) => {
         res.status(500).json({ message: 'Error fetching leaves', error: error.toString() });
     }
 }
+
+
+const getLastDayOfMonth = (year, month) => {
+    // February has 29 days in leap years, 28 otherwise
+    if (month === 1 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) {
+        return 29;
+    } else {
+        const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        return daysInMonth[month];
+    }
+};

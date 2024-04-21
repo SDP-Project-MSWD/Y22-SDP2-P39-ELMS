@@ -38,38 +38,34 @@ const Leave = () => {
         leaveStartDate: leaveStartDate,
         leaveEndDate: leaveEndDate
       });
-      handleLeaveResponse(response);
+      handleLeaveResponse(response.data); // Pass response.data to handleLeaveResponse
     } catch (error) {
-      handleLeaveError(error);
+      handleLeaveError(error.response.data); // Pass error.response.data to handleLeaveError
     }
   }
 
-  const handleLeaveError = (error) => {
-    if (error.response && error.response.status === 400) {
-      toast.error("Leave already posted");
+  const handleLeaveError = (data) => {
+    if (data && data.error) {
+      toast.error(data.error); // Display error message from response
     } else {
       toast.error("Error submitting form");
     }
   }
 
-  const handleLeaveResponse = (response) => {
-    const { status } = response;
-    switch (status) {
-      case 200:
-        toast.success("Successfully posted");
-        setLeaveDetails({
-          empID: "",
-          leaveType: "",
-          leaveReason: "",
-          leaveStartDate: "",
-          leaveEndDate: ""
-        });
-        break;
-      case 400:
-        toast.error("Leave already posted");
-        break;
-      default:
-        toast.error("Error submitting form");
+  const handleLeaveResponse = (data) => {
+    if (data && data.message) {
+      toast.success(data.message); // Display success message from response
+      setLeaveDetails({
+        empID: "",
+        leaveType: "",
+        leaveReason: "",
+        leaveStartDate: "",
+        leaveEndDate: ""
+      });
+    } else if (data && data.error) {
+      toast.error(data.error); // Display error message from response
+    } else {
+      toast.error("Error submitting form");
     }
   }
 
