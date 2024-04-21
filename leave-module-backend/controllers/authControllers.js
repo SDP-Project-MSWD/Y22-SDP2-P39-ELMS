@@ -5,15 +5,24 @@ const sendMail = require('../utils/sendMail');
 const nodemailer = require("nodemailer");
 
 exports.userRegister = async (req, res) => {
-   try {
-       const { empID, email, password, firstName, lastName, dob, phone, designation } = req.body;
-       const hashedPassword = await bcrypt.hash(password, 10);
-       const user = new User({empID, email, password:hashedPassword, firstName, lastName, dob,phone, designation });
-       await user.save();
-       return res.status(201).json({ message: 'User registered successfully' });
-       } catch (error) {
-       return res.status(500).json({ error: 'Registration failed' , error});
-   }
+    try {
+        const { empID, email, password, firstName, lastName, dob, phone, designation } = req.body;
+        
+        // Check if empID or email already exist in the database
+        const existingUser = await User.findOne({ $or: [{ empID }, { email }] });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Employee ID or Email already exists' });
+        }
+
+        // If not found, proceed with registration
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new User({ empID, email, password: hashedPassword, firstName, lastName, dob, phone, designation });
+        await user.save();
+        
+        return res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        return res.status(500).json({ error: 'Registration failed', error });
+    }
 }
 
 exports.userLogin = async (req, res) => {
@@ -102,20 +111,26 @@ exports.getAllUsers = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-      const empID = req.params.empID;
-      const updatedData = req.body;
-      const filter = { empID }; // Filter based on the userID field
-      const options = { new: true }; // Return the updated document
-      const user = await User.findOneAndUpdate(filter, updatedData, options);
-      if (!user) {
-        res.status(404).json({ message: 'User not found' });
-      } else {
+        const empID = req.params.empID;
+        const updatedData = req.body;
+
+        // Check if the provided email is already present in the database
+        const existingUser = await User.findOne({ email: updatedData.email, empID: { $ne: empID } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Email already exists' });
+        }
+
+        const filter = { empID }; // Filter based on the userID field
+        const options = { new: true }; // Return the updated document
+        const user = await User.findOneAndUpdate(filter, updatedData, options);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
         res.json(user);
-      }
     } catch (error) {
-      res.status(500).json({ message: 'Error updating user', error: error.toString() });
+        res.status(500).json({ message: 'Error updating user', error: error.toString() });
     }
-  };
+};
   
   exports.deleteUser = async (req, res) => {
     try {
@@ -168,3 +183,13 @@ exports.editProfile = async (req,res) => {
         res.status(500).json({message:"Internal Server Error", error : error});
     }
 }
+
+exports.filterByDesignation = async (req, res) => {
+    try {
+        const { designation } = req.params;
+        const filteredEmployees = await User.find({ designation });
+        res.json(filteredEmployees);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

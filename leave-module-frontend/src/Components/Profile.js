@@ -139,11 +139,9 @@ const Profile = () => {
                     </Card>
                 </Grid>
                 <Dialog open={isEditDialogOpen} onClose={handleEditDialogClose}>
-                <DialogTitle>
-                    <Typography component="h1" variant="h5" gutterBottom sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
-                        Edit Profile Details
-                    </Typography>
-                </DialogTitle>
+                <DialogTitle sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center', m:2 }}>
+        Edit Profile Details
+    </DialogTitle>
                 <DialogContent>
                     <TextField
                         margin="normal"

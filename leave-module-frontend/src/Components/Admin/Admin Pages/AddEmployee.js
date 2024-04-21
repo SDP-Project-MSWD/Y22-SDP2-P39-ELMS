@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -6,12 +6,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import  Select  from '@mui/material/Select';
-import  MenuItem  from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import API from '../../../Hooks/Api';
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -26,29 +25,40 @@ export default function AddEmployee() {
         phone: "",
         designation: ""
     });
-    
-      const handleSubmit = async (event) => {
-        event.preventDefault();
-        const { empID, email, password, firstName, lastName, dob, phone, designation} = employeeDetails;
-        try {
-          const response = await API.post("http://localhost:4000/auth/register",
-            {
-                empID: empID,
-                email: email,
-                password: password,
-                firstName: firstName,
-                lastName: lastName,
-                dob: dob,
-                phone: phone,
-                designation: designation 
-            });
-    
-          console.log("Employee created successfully:", response.data);
-          //setStudentDetails({});
-    
-          toast.success("Employee created successfully");
 
-          setEmployeeDetails({
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const { empID, email, password, firstName, lastName, dob, phone, designation } = employeeDetails;
+        try {
+            const response = await API.post("http://localhost:4000/auth/register", {
+                empID,
+                email,
+                password,
+                firstName,
+                lastName,
+                dob,
+                phone,
+                designation
+            });
+
+            console.log("Employee created successfully:", response.data);
+            toast.success("Employee created successfully");
+            resetForm();
+        } catch (error) {
+            if (error.response.status === 400) {
+                toast.error("Employee ID or Email already exists");
+            } else {
+                toast.error("Registration failed");
+            }
+        }
+    };
+
+    const handleInputChange = (event, field) => {
+        setEmployeeDetails({ ...employeeDetails, [field]: event.target.value });
+    };
+
+    const resetForm = () => {
+        setEmployeeDetails({
             empID: "",
             email: "",
             password: "",
@@ -57,156 +67,71 @@ export default function AddEmployee() {
             dob: "",
             phone: "",
             designation: ""
-          });
-        }
-        catch (error) {
-          if (error.response && error.response.status === 401) {
-              toast.error("Unauthorized: Please login first");
-          } else {
-              toast.error("Error Adding Student");
-          }
-      }
-      }
-      const handleDesignationChange = (event) => {
-        setEmployeeDetails({ ...employeeDetails, designation: event.target.value });
-      };
+        });
+    };
 
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Add Employee
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="empID"
-                  label="Employee ID"
-                  value={employeeDetails.empID}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, empID: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  value={employeeDetails.email}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, email: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={employeeDetails.password}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, password: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  value={employeeDetails.firstName}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, firstName: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  value={employeeDetails.lastName}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, lastName: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="dob"
-                  label="Date of Birth"
-                  type="date"
-                  value={employeeDetails.dob}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, dob: event.target.value })
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    min: "1970-01-01", // Set minimum date to 1970-01-01
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="phone"
-                  label="Phone"
-                  value={employeeDetails.phone}
-                  onChange={(event) => {
-                    setEmployeeDetails({ ...employeeDetails, phone: event.target.value })
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Select
-                    required
-                    fullWidth
-                    id="designation"
-                    label="Designation"
-                    value={employeeDetails.designation}
-                    onChange={handleDesignationChange}
-                >
-                    <MenuItem value="Admin">Admin</MenuItem>
-                    <MenuItem value="Employee">Employee</MenuItem>
-                    <MenuItem value="Manager">Manager</MenuItem>
-                    <MenuItem value="Team Lead">Team Lead</MenuItem>
-                </Select>
-                </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Add Employee
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box sx={{ padding: '20px', marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', m: 3, boxShadow: '0 0 50px #b4c5e4' }}>
+                    <Typography component="h2" variant="h6" sx={{ backgroundColor: '#b4c5e4', padding: '10px', borderRadius: '5px', width: '100%', textAlign: 'center' }}>
+                        <b>Add Employee</b>
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        <Grid container spacing={2}>
+                            {[
+                                { id: "empID", label: "Employee ID", type: "text" },
+                                { id: "email", label: "Email", type: "email", autocomplete: "email" },
+                                { id: "password", label: "Password", type: "password", autocomplete: "current-password" },
+                                { id: "firstName", label: "First Name", type: "text" },
+                                { id: "lastName", label: "Last Name", type: "text" },
+                                { id: "dob", label: "Date of Birth", type: "date" },
+                                { id: "phone", label: "Phone", type: "tel" }
+                            ].map((field) => (
+                                <Grid item xs={12} key={field.id}>
+                                    <TextField
+                                        required
+                                        fullWidth
+                                        id={field.id}
+                                        label={field.label}
+                                        type={field.type}
+                                        value={employeeDetails[field.id]}
+                                        onChange={(event) => handleInputChange(event, field.id)}
+                                        autoComplete={field.autocomplete}
+                                        InputLabelProps={field.type === "date" ? { shrink: true } : null}
+                                        inputProps={{ min: field.id === "dob" ? "1970-01-01" : null }}
+                                    />
+                                </Grid>
+                            ))}
+                            <Grid item xs={12}>
+                                <Select
+                                    required
+                                    fullWidth
+                                    id="designation"
+                                    label="Designation"
+                                    value={employeeDetails.designation}
+                                    onChange={(event) => handleInputChange(event, "designation")}
+                                >
+                                    {["Admin", "Employee", "Manager", "Team Lead"].map((designation) => (
+                                        <MenuItem key={designation} value={designation}>
+                                            {designation}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Add Employee
+                        </Button>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
+    );
 }

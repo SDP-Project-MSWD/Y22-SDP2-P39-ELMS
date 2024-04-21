@@ -12,5 +12,6 @@ router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password/:id/:token',authController.resetPassword);
 router.get('/profile/:empID', verifyToken , authController.getProfile) ;
 router.put('/profile/:empID', verifyToken  , authController.editProfile);
+router.get('/filter/:designation', verifyToken, authController.filterByDesignation);
 
 module.exports = router;

@@ -71,9 +71,9 @@ const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
     }
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '70px', justifyContent: 'center' }}>
             {allEmployees.map((employee, index) => (
-                <Card key={index} sx={{ width: 300, backgroundColor: "lightblue" }}>
+                <Card key={index} sx={{ width: 300, backgroundColor: "#b4c5e4",boxShadow: '0 0 50px #b4c5e4', padding: '7px' }}>
                     <CardActionArea>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
