@@ -140,26 +140,26 @@ const Profile = () => {
                 </Grid>
                 <Dialog open={isEditDialogOpen} onClose={handleEditDialogClose}>
                 <DialogTitle sx={{ backgroundColor: '#b4c5e4', padding: '5px', borderRadius: '5px', width: '100%', textAlign: 'center', m:2 }}>
-        Edit Profile Details
-    </DialogTitle>
+                    Edit Profile Details
+                </DialogTitle>
                 <DialogContent>
                     <TextField
                         margin="normal"
-                        label="Name"
+                        label="First Name"
                         fullWidth
                         value={editedFirstName}
                         onChange={(e) => setEditedFirstName(e.target.value)}
                     />
                     <TextField
                         margin="normal"
-                        label="Name"
+                        label="Last Name"
                         fullWidth
                         value={editedLastName}
                         onChange={(e) => setEditedLastName(e.target.value)}
                     />
                     <TextField
                         margin="normal"
-                        label="CGPA"
+                        label="DOB"
                         fullWidth
                         value={editedDob}
                         onChange={(e) => setEditedDob(e.target.value)}

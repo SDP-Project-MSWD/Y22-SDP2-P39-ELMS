@@ -1,4 +1,5 @@
 const Leave = require('../models/Leave');
+const User = require("../models/Users");
 
 exports.getDashboardData = async (req, res) => {
     try {
@@ -70,6 +71,88 @@ exports.getDashboardData = async (req, res) => {
         res.status(200).json(dashboardData);
     } catch (error) {
         console.error("Error fetching dashboard data:", error);
+        res.status(500).json({ error: "Internal server error", error: error.toString() });
+    }
+};
+
+
+exports.getAdminDashboard = async (req, res) => {
+    try {
+        // Fetch total users other than admin with their designations
+        const users = await User.find({ designation: { $ne: "Admin" } });
+
+        // Count the number of managers, team leads, and employees
+        const usersCount = {
+            Manager: users.filter(user => user.designation === 'Manager').length,
+            TeamLead: users.filter(user => user.designation === 'Team Lead').length,
+            Employee: users.filter(user => user.designation === 'Employee').length
+        };
+
+        // Get today's date
+        const today = new Date();
+
+        // Find managers, team leads, and employees who are on leave today
+        const managersOnLeaveToday = await Leave.countDocuments({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Manager').map(manager => manager.empID) }
+        });
+        
+        const teamLeadsOnLeaveToday = await Leave.countDocuments({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Team Lead').map(teamLead => teamLead.empID) }
+        });
+        
+        const employeesOnLeaveToday = await Leave.countDocuments({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Employee').map(employee => employee.empID) }
+        });
+        
+        const companyEmployeesOnLeaveToday = await Leave.countDocuments({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today }
+        });
+        const managersOnLeaveTodayEmpID = await Leave.find({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Manager').map(manager => manager.empID) }
+        }).select('empID'); // Select only the empID field
+        
+        const teamLeadsOnLeaveTodayEmpID = await Leave.find({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Team Lead').map(teamLead => teamLead.empID) }
+        }).select('empID'); // Select only the empID field
+        
+        const employeesOnLeaveTodayEmpID = await Leave.find({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today },
+            empID: { $in: users.filter(user => user.designation === 'Employee').map(employee => employee.empID) }
+        }).select('empID'); // Select only the empID field
+        
+        const companyEmployeesOnLeaveTodayEmpID = await Leave.find({
+            leaveStartDate: { $lte: today },
+            leaveEndDate: { $gte: today }
+        }).select('empID');
+        // Return the admin dashboard data as JSON object
+        const adminDashboardData = {
+            totalUsers: users.length,
+            usersCount,
+            managersOnLeaveToday,
+            managersOnLeaveTodayEmpID,
+            teamLeadsOnLeaveToday,
+            teamLeadsOnLeaveTodayEmpID,
+            employeesOnLeaveToday,
+            employeesOnLeaveTodayEmpID,
+            companyEmployeesOnLeaveToday,
+            companyEmployeesOnLeaveTodayEmpID
+        };
+
+        res.status(200).json(adminDashboardData);
+    } catch (error) {
+        console.error("Error fetching admin dashboard data:", error);
         res.status(500).json({ error: "Internal server error", error: error.toString() });
     }
 };
