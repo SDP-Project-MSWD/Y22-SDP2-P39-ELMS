@@ -20,7 +20,7 @@ import { LOGIN_ENDPOINT } from '../../Utils/EndPoints';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const defaultTheme = createTheme();
-const SITE_KEY = '6LdfRsgpAAAAAK68OW-Bzx0DOLuo_a9c9kzKO_R-';
+const SITE_KEY = '6LfQcMgpAAAAAAjAnW8JdQZATb3PQEOy-mR66gxY';
 
 export default function SignIn() {
     const navigate = useNavigate();
