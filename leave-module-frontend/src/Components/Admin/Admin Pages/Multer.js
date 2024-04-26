@@ -28,7 +28,8 @@ const Multer = () => {
   };
 
   return (
-    <div className="upload-container">
+    <div className="upload-container" style={{ paddingTop: "30%"}}>
+      <center>
       <form onSubmit={handleSubmit}>
         <label htmlFor="fileInput">Choose a CSV file: </label>
         <input type='file' id="fileInput" onChange={(e) => setSelectedFile(e.target.files[0])} />
@@ -40,7 +41,9 @@ const Multer = () => {
       <div align="center">
         <Link to="/admin/all-employees">View Data Here</Link>
       </div>
+      </center>
     </div>
+    
   );
 }
 
