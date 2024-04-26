@@ -4,7 +4,6 @@ const User = require('../models/Users');
 const sendMail = require('../utils/sendMail');
 const nodemailer = require("nodemailer");
 const axios = require('axios');
-const SECRET_KEY = '6LdfRsgpAAAAAFDSEXbP0fbUupHar3Tn4DlqL9Q8';
 exports.userRegister = async (req, res) => {
     try {
         const { empID, email, password, firstName, lastName, dob, phone, designation } = req.body;
@@ -29,7 +28,8 @@ exports.userRegister = async (req, res) => {
 exports.userLogin = async (req, res) => {
     try {
         const { empID, password, recaptchaValue } = req.body;
-        axios({url: `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY}&response=${recaptchaValue}`,  method: 'POST',
+        SECRET_KEY_CAPCHA = process.env.SECRET_KEY
+        axios({url: `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY_CAPCHA}&response=${recaptchaValue}`,  method: 'POST',
     }).then(async ({ data }) => {
         
         const user = await User.findOne({ empID });

@@ -25,9 +25,7 @@ export default function SignIn() {
     const navigate = useNavigate();
     const [recaptchaValue, setRecaptchaValue] = useState('');
     const captchaRef = useRef(null);
-
-
-
+    
     const [data, setData] = useState({
         empID: "",
         password: ""

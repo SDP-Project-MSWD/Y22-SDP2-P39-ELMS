@@ -67,6 +67,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const getEmpFID = (empID) => {
+  // Check if empID is null or undefined, return a default value or handle the error accordingly
+  if (empID === null || empID === undefined) {
+    // Return a default value or handle the error
+    return ''; // Default value
+  }
+
+  // If empID is not null or undefined, proceed with extracting the first character
   return empID.charAt(0);
 };
 
