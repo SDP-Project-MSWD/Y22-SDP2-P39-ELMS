@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import API from '../../../Hooks/Api';
 import { Link } from 'react-router-dom';
+import { ADMIN_MULTER } from '../../../Utils/EndPoints';
 
 const Multer = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,7 +18,7 @@ const Multer = () => {
     formData.append('csvFile', selectedFile);
 
     try {
-      await API.post("http://localhost:4000/uploadcsv", formData);
+      await API.post(ADMIN_MULTER, formData);
       console.log("File uploaded successfully!");
       setError(null); // Clear any previous errors
     } catch (error) {

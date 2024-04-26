@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import EmployeeIDCard from './EmployeeIDCard';
 import API from '../../../Hooks/Api';
 import { ThemeProvider } from '@emotion/react';
+import { ADMIN_EMPLOYEEBYID } from '../../../Utils/EndPoints';
 
 const defaultTheme = createTheme();
 
@@ -20,7 +21,8 @@ const EmployeeById = () => {
     e.preventDefault();
     try {
       const empID = id;
-      const response = await API.get(`http://localhost:4000/auth/profile/${empID}`);
+      const EMPLOYEE_BY_ID = ADMIN_EMPLOYEEBYID + empID;
+      const response = await API.get(EMPLOYEE_BY_ID);
       setEmployee(response.data);
       console.log(response.data);
       toast.success("Id is Found");

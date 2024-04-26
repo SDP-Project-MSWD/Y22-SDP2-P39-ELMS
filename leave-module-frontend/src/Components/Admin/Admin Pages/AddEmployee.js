@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-hot-toast';
 import API from '../../../Hooks/Api';
+import { ADMIN_ADD_EMPLOYEE  } from '../../../Utils/EndPoints';
 
 const defaultTheme = createTheme();
 
@@ -30,7 +31,7 @@ export default function AddEmployee() {
         event.preventDefault();
         const { empID, email, password, firstName, lastName, dob, phone, designation } = employeeDetails;
         try {
-            const response = await API.post("http://localhost:4000/auth/register", {
+            const response = await API.post(ADMIN_ADD_EMPLOYEE, {
                 empID,
                 email,
                 password,

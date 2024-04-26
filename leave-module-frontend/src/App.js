@@ -8,9 +8,7 @@ import ForgotPassword from "./Components/Login/ForgotPassword";
 import ResetPassword from './Components/Login/ResetPassword';
 //Types of users import
 import HomeA from './Components/Admin/HomeA';
-import HomeM from './Components/User/Manager/HomeM';
-import HomeTL from './Components/User/Team Lead/HomeTL';
-import HomeE from './Components/User/Employee/HomeE';
+import HomeU from './Components/User/Employee/HomeE';
 
 //import for Admin
 import DashboardA from './Components/Admin/Admin Pages/DashboardA';
@@ -61,21 +59,21 @@ function App() {
             <Route path='multer' element={<Multer />}/>
             <Route path='profile' element={<Profile />} />
           </Route>
-          <Route path="manager" element={<HomeM />}>
+          <Route path="manager" element={<HomeU />}>
             <Route path='' element={<DashboardM />} />
             <Route path='leaves' element={<LeaveM/>}/>
             <Route path='leave-status' element={<LeaveStatusM />} />
             <Route path='leave-requests' element={<LeaveRequestsM />} />
             <Route path='profile' element={<Profile />} />
           </Route>
-          <Route path="team-lead" element={<HomeTL />}>
+          <Route path="team-lead" element={<HomeU />}>
             <Route path='' element={<DashboardTL />} />
             <Route path='leaves' element={<LeaveTL/>}/>
             <Route path='leave-status' element={<LeaveStatusE />} />
             <Route path='leave-requests' element={<LeaveRequestsTL />} />
             <Route path='profile' element={<Profile />} />
           </Route>
-          <Route path="employee" element={<HomeE />}>
+          <Route path="employee" element={<HomeU />}>
             <Route path='' element={<DashboardE />} />
             <Route path='leaves' element={<LeaveE />} />
             <Route path='leave-status' element={<LeaveStatusE />} />

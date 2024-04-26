@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { toast } from 'react-hot-toast';
 import API from '../../../Hooks/Api';
+import { ADMIN_EDIT_EMPLOYEE, ADMIN_DELETE_EMPLOYEE } from '../../../Utils/EndPoints';
 
 const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -32,7 +33,8 @@ const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
     const handleEditSubmit = async () => {
         try {
             // Send a PUT request to update the employee details
-            await API.put(`http://localhost:4000/auth/${editedEmployee.empID}`, {
+            const ADMIN_EDIT_EMPLOYEE_ENDPOINT = ADMIN_EDIT_EMPLOYEE + editedEmployee.empID;
+            await API.put(ADMIN_EDIT_EMPLOYEE_ENDPOINT, {
                 email: editedEmail,
                 firstName: editedFirstName,
                 lastName: editedLastName,
@@ -61,8 +63,9 @@ const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
 
     const deleteById = async (empID) => {
         try {
+            const ADMIN_DELETE_EMPLOYEE_ENPOINT = ADMIN_DELETE_EMPLOYEE + empID;
             // Send a DELETE request to the server to delete the employee with the given ID
-            await API.delete(`http://localhost:4000/auth/${empID}`);
+            await API.delete(ADMIN_DELETE_EMPLOYEE_ENPOINT);
             // If the request is successful, remove the employee from the list
             setAllEmployees(allEmployees.filter(employee => employee.empID !== empID));
         } catch (error) {

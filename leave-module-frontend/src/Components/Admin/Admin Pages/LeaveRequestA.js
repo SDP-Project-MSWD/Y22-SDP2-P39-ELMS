@@ -12,6 +12,7 @@ import {
   Box,
 } from '@mui/material';
 import API from '../../../Hooks/Api';
+import { ADMIN_GET_ALL_LEAVES, ADMIN_ACCEPT_LEAVE, ADMIN_REJECT_LEAVE } from '../../../Utils/EndPoints';
 
 function LeaveRequestA() {
   const [inProgressLeaves, setInProgressLeaves] = useState([]);
@@ -24,7 +25,7 @@ function LeaveRequestA() {
 
     const fetchData = async () => {
         try {
-          const getAllLeaves = await API.get('http://localhost:4000/manager/leave/getAllLeaves');
+          const getAllLeaves = await API.get(ADMIN_GET_ALL_LEAVES);
       
           // Filter out employee IDs starting with 'M
           const inProgressResponse = getAllLeaves.data.filter((leave) => leave.leaveStatus === "In Progress");
@@ -43,7 +44,8 @@ function LeaveRequestA() {
 
   const handleAccept = async (id) => {
     try {
-      await API.put(`http://localhost:4000/manager/leave/accept/${id}`);
+      const ADMIN_ACCEPT = ADMIN_ACCEPT_LEAVE + id;
+      await API.put(ADMIN_ACCEPT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
       console.error('Error accepting leave request:', error);
@@ -52,7 +54,8 @@ function LeaveRequestA() {
 
   const handleReject = async (id) => {
     try {
-      await API.put(`http://localhost:4000/manager/leave/reject/${id}`);
+      const ADMIN_REJECT = ADMIN_REJECT_LEAVE + id;
+      await API.put(ADMIN_REJECT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
       console.error('Error rejecting leave request:', error);

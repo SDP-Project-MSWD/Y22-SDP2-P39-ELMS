@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { PROFILE_ENDPOINT } from '../Utils/EndPoints';
 
 function stringToColor(string) {
     let hash = 0;
@@ -72,7 +73,8 @@ const Profile = () => {
 
     const handleEditSubmit = async () => {
         try{
-            await API.put(`http://localhost:4000/auth/profile/${empID}`, {
+            const PROFILE = PROFILE_ENDPOINT + empID;
+            await API.put(PROFILE, {
                 email: editedEmail,
                 firstName: editedFirstName,
                 lastName: editedLastName,
@@ -91,7 +93,8 @@ const Profile = () => {
 
     useEffect(() => {
         try {
-            API.get(`http://localhost:4000/auth/profile/${empID}`)
+            const PROFILE = PROFILE_ENDPOINT + empID;
+            API.get(PROFILE)
                 .then((response) => {
                     setProfileDetails(response.data);
                     const name = response.data.firstName + " " + response.data.lastName;

@@ -12,7 +12,10 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'; // Import logout icon
-import { mainListItems } from './listItems';
+//import { mainListItems } from './listItems';
+import { mainListItems as mainListItemsM } from '../Manager/ListItemsM';
+import { mainListItems as mainListItemsTL } from '../Team Lead/ListItemsTL';
+import { mainListItems as mainListItemsE } from './ListItemsE';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../../Token/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -63,11 +66,28 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const getEmpFID = (empID) => {
+  return empID.charAt(0);
+};
+
+const getMainListItems = (empFID) => {
+  switch (empFID) {
+    case 'M':
+      return mainListItemsM;
+    case 'T':
+      return mainListItemsTL;
+    default:
+      return mainListItemsE;
+  }
+};
+
 const defaultTheme = createTheme();
 
 function HomeE() {
   const { empID, logout } = useAuth(); // Destructure logout from useAuth
   const [open, setOpen] = React.useState(true);
+  const empFID = getEmpFID(empID);
+  const mainListItems = getMainListItems(empFID);
 
   const toggleDrawer = () => {
     setOpen(!open);

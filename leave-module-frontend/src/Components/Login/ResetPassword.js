@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { RESET_PASSWORD } from '../../Utils/EndPoints';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -21,7 +22,9 @@ export default function ResetPassword() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:4000/auth/reset-password/${id}/${token}`, { password });
+            const RESET_PASSWORD_ENDPOINT = RESET_PASSWORD + id + "/" + token;
+            console.log(RESET_PASSWORD_ENDPOINT);
+            const response = await axios.post(RESET_PASSWORD_ENDPOINT, { password });
     
             if (response.status === 200) {
                 toast.success("The password has been changed successfully.");

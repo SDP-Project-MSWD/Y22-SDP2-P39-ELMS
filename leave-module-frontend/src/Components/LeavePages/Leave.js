@@ -4,6 +4,7 @@ import { FormControl, InputLabel, Select, MenuItem, Button, CssBaseline, TextFie
 import { createTheme } from '@mui/material/styles';
 import API from "../../Hooks/Api";
 import toast from 'react-hot-toast';
+import { APPLY_LEAVE } from '../../Utils/EndPoints';
 
 const defaultTheme = createTheme();
 
@@ -31,7 +32,7 @@ const Leave = () => {
     event.preventDefault();
     const { empID, leaveType, leaveReason, leaveStartDate, leaveEndDate } = leaveDetails;
     try {
-      const response = await API.post('http://localhost:4000/employee/', {
+      const response = await API.post(APPLY_LEAVE, {
         empID: empID,
         leaveType: leaveType,
         leaveReason: leaveReason,

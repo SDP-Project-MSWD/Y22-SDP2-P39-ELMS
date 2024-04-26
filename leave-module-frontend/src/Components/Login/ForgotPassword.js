@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { FORGOT_PASSWORD } from '../../Utils/EndPoints';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +24,7 @@ export default function ForgotPassword() {
         event.preventDefault();
         const { empID, email } = data;
         try {
-            const response = await axios.post('http://localhost:4000/auth/forgot-password', { empID, email });
+            const response = await axios.post(FORGOT_PASSWORD, { empID, email });
             if (response.status === 200) {
                 toast.success("A reset password link has been successfully sent");
                 setData({ empID: "", email: "" });

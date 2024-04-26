@@ -55,7 +55,7 @@ app.post('/uploadcsv', upload.single("csvFile"), async (req, res) => {
         const jsonArray = await csv().fromFile(req.file.path);
         await Users.insertMany(jsonArray);
         console.log("Added to Database");
-        return res.send("Added to Database Successfully");
+        return res.send("Added to Database Successfully ");
     } catch (error) {
         console.error("Error uploading file:", error); // Log the specific error
         return res.status(500).json({ error: "Internal Server Error" });

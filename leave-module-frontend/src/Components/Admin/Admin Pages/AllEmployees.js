@@ -4,6 +4,7 @@ import API from '../../../Hooks/Api';
 import toast from 'react-hot-toast';
 import { Box, Typography, Container, ThemeProvider, CssBaseline, Select, MenuItem, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+import { ADMIN_GET_ALL_EMPLOYEE, ADMIN_FILTER } from '../../../Utils/EndPoints';
 
 const defaultTheme = createTheme();
 
@@ -21,9 +22,9 @@ const AllEmployees = () => {
   }, [filterDesignation]);
 
   const fetchEmployees = () => {
-    let url = "http://localhost:4000/auth/getAllUsers"; // Default endpoint
+    let url = ADMIN_GET_ALL_EMPLOYEE; // Default endpoint
     if (filterDesignation && filterDesignation  !== 'All') {
-      url = `http://localhost:4000/auth/filter/${filterDesignation}`; // Custom endpoint with designation filter
+      url = ADMIN_FILTER + filterDesignation; // Custom endpoint with designation filter
     }
     API.get(url)
       .then((response) => {

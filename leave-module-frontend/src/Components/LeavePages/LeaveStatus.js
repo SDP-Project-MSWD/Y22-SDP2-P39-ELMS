@@ -14,14 +14,16 @@ import { useAuth } from '../../Token/AuthContext';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CancelIcon from '@mui/icons-material/Cancel';
 import PendingIcon from '@mui/icons-material/Pending';
+import { LEAVE_STATUS } from '../../Utils/EndPoints';
 
 
 function LeaveStatus() {
   const [leaveData, setLeaveData] = React.useState([]);
   const { empID } = useAuth();
   React.useEffect(() => {
+    const LEAVE_STATUS_ENDPOINT = LEAVE_STATUS + empID;
     // Fetch leave data from backend
-    API.get(`http://localhost:4000/employee/${empID}`)
+    API.get(LEAVE_STATUS_ENDPOINT)
       .then(response => {
         setLeaveData(response.data.reverse());
       })

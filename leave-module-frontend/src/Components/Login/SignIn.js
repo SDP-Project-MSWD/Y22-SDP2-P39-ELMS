@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { LOGIN_ENDPOINT } from '../../Utils/EndPoints';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import {toast} from 'react-hot-toast';
@@ -29,12 +30,11 @@ export default function SignIn() {
         event.preventDefault();
         const { empID, password } = data;
         try {
-            const response = await axios.post('http://localhost:4000/auth/login', { empID, password });
+            const response = await axios.post(LOGIN_ENDPOINT, { empID, password });
             if (response && response.status === 200) { // Check if response is defined
                 const { token } = response.data; // Access response data properly
                 const { designation } = response.data;
                 const empID = data.empID;
-                console.log(response.data);
                 userObj.login(token, empID);
                 sessionStorage.setItem("empID", empID);
                 sessionStorage.setItem('accessToken', token);
@@ -49,7 +49,6 @@ export default function SignIn() {
                     navigate('/employee');
                 }
             } else {
-                console.log(response.data); // Log response data for debugging
                 toast.error("Error logging in"); // Display generic error message
             }
         } catch (error) {

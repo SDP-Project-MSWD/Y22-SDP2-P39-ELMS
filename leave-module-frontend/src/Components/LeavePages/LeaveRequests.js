@@ -18,6 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useAuth } from '../../Token/AuthContext';
+import { LEAVE_REQUESTS_GET_LEAVES, LEAVE_REQUESTS_ACCEPT, LEAVE_REQUESTS_REJECT } from '../../Utils/EndPoints';
 
 function LeaveRequests() {
   const [inProgressLeaves, setInProgressLeaves] = useState([]);
@@ -31,7 +32,7 @@ function LeaveRequests() {
 
     const fetchData = async () => {
         try {
-          const getAllLeaves = await API.get('http://localhost:4000/manager/leave/getAllLeaves');
+          const getAllLeaves = await API.get(LEAVE_REQUESTS_GET_LEAVES);
       
           let filteredInProgressLeaves = [];
           let filteredAcceptedLeaves = [];
@@ -82,7 +83,8 @@ function LeaveRequests() {
 
   const handleAccept = async (id) => {
     try {
-      await API.put(`http://localhost:4000/manager/leave/accept/${id}`);
+      const LEAVE_ACCEPT = LEAVE_REQUESTS_ACCEPT + id;
+      await API.put(LEAVE_ACCEPT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
       console.error('Error accepting leave request:', error);
@@ -91,7 +93,8 @@ function LeaveRequests() {
 
   const handleReject = async (id) => {
     try {
-      await API.put(`http://localhost:4000/manager/leave/reject/${id}`);
+      const LEAVE_REJECT = LEAVE_REQUESTS_REJECT + id;
+      await API.put(LEAVE_REJECT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
       console.error('Error rejecting leave request:', error);
