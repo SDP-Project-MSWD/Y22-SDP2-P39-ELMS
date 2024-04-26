@@ -17,15 +17,12 @@ import { AuthContext } from '../../Token/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { LOGIN_ENDPOINT } from '../../Utils/EndPoints';
 
-import ReCAPTCHA from "react-google-recaptcha";
+;
 //siteKey
 const defaultTheme = createTheme();
-const SITE_KEY = '6LfQcMgpAAAAAAjAnW8JdQZATb3PQEOy-mR66gxY';
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const [recaptchaValue, setRecaptchaValue] = useState('');
-    const captchaRef = useRef(null);
 
     const [data, setData] = useState({
         empID: "",
@@ -37,13 +34,12 @@ export default function SignIn() {
 
         const { empID, password } = data;
         try {
-            const response = await axios.post(LOGIN_ENDPOINT, { empID, password, recaptchaValue });
+            const response = await axios.post(LOGIN_ENDPOINT, { empID, password});
             if (response && response.status === 200) { // Check if response is defined
                 const { token } = response.data; // Access response data properly
                 const { designation } = response.data;
                 const empID = data.empID;
                 userObj.login(token, empID);
-                captchaRef.current.reset();
                 sessionStorage.setItem("empID", empID);
                 sessionStorage.setItem('accessToken', token);
                 toast.success("Login successful");
@@ -67,10 +63,6 @@ export default function SignIn() {
             }
         }
     };
-
-    const onChange = value => {
-        setRecaptchaValue(value);
-    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -118,14 +110,6 @@ export default function SignIn() {
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
-
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                            <ReCAPTCHA
-                                sitekey={SITE_KEY}
-                                onChange={onChange}
-                                ref={captchaRef}
-                            />
-                        </div>
 
                         <Button
                             type="submit"
