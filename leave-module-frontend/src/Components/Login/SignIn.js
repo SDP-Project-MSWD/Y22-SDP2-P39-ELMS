@@ -34,7 +34,6 @@ export default function SignIn() {
     const userObj = useContext(AuthContext);
     const handleSubmit = async (event) => {
         event.preventDefault();
-        captchaRef.current.reset();
 
         const { empID, password } = data;
         try {
@@ -44,6 +43,7 @@ export default function SignIn() {
                 const { designation } = response.data;
                 const empID = data.empID;
                 userObj.login(token, empID);
+                captchaRef.current.reset();
                 sessionStorage.setItem("empID", empID);
                 sessionStorage.setItem('accessToken', token);
                 toast.success("Login successful");
