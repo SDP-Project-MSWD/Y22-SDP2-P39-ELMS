@@ -1,5 +1,5 @@
 // Main Backend-Server URL
-export const SERVERURL = "https://elms-backend.vercel.app/";
+export const SERVERURL = "http://localhost:4000/";
 
 //Authentication Endpoints for User
 export const LOGIN_ENDPOINT = SERVERURL + "auth/login";

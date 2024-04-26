@@ -31,7 +31,7 @@ export default function AddEmployee() {
         event.preventDefault();
         const { empID, email, password, firstName, lastName, dob, phone, designation } = employeeDetails;
         try {
-            const response = await API.post(ADMIN_ADD_EMPLOYEE, {
+            await API.post(ADMIN_ADD_EMPLOYEE, {
                 empID,
                 email,
                 password,
