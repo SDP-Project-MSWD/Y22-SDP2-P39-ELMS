@@ -21,7 +21,7 @@ const sendMail = async(id, token, sent_from, sent_to, reply_to)=>{
         to : sent_to,
         replyTo: reply_to,
         subject: 'Reset your password',
-        text: `http://localhost:3000/reset-password/${id}/${token}`
+        text: `https://elms-frontend.onrender.com/reset-password/${id}/${token}`
     }
 
     transporter.sendMail(options,function(err,info){
