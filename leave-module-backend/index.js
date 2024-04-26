@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cors());
 
 const corsOptions = {
-    origin: 'https://y22-sdp-2-p39-elms.vercel.app',
+    origin: '',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
