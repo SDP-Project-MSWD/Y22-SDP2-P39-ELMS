@@ -10,6 +10,7 @@ import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button'
 import MenuList from '@mui/material/MenuList';
 import { Link } from 'react-router-dom';
 import HomePageImage from './Images/home2.png';
@@ -36,6 +37,9 @@ export default function Home() {
       setOpen(false);
     }
   }
+  const handleLinkClick = () => {
+    window.open('https://improveyourlifestyle1.blogspot.com/2024/04/employee-leave-management-using-mern.html', '_blank');
+  };
   return (
     <>
     <Box sx={{ flexGrow: 1 }}>
@@ -101,6 +105,9 @@ export default function Home() {
           <img src={HomePageImage} alt='HomePageImage' style={{width:'100%',height:'10%', paddingBottom:"5%"}}></img>
         </center>
         <div style={{paddingLeft: "3%"}}>
+        <div align="center">
+          <Button onClick={handleLinkClick} variant="contained">About Project</Button>
+      </div>
           <center>
           <Typography variant="h4" component="h2" align='left'>
             About Us
