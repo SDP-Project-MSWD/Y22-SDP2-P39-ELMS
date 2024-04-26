@@ -1,0 +1,4 @@
+empID,email,password,firstName,lastName,dob,phone,designation
+M010,M010@gmail.com,123456789,Mastan,Vali,16-09-2004,1234567890,Manager
+TL010,TL010@gmail.com,123456789,Vishnu ,Sreya,15-02-2004,9876543210,Team Lead
+E010,E010@gmail.com,123456789,Imran,Rasool,12-08-2004,9999999999,Employee
