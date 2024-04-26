@@ -18,7 +18,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LOGIN_ENDPOINT } from '../../Utils/EndPoints';
 
 import ReCAPTCHA from "react-google-recaptcha";
-
+//siteKey
 const defaultTheme = createTheme();
 const SITE_KEY = '6LfQcMgpAAAAAAjAnW8JdQZATb3PQEOy-mR66gxY';
 
