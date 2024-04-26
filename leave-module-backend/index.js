@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cors());
 
 const corsOptions = {
-    origin: 'https://elms-frontend-beta.vercel.app',
+    origin: '',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
