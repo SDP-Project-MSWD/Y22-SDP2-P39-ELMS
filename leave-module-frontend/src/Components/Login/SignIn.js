@@ -43,7 +43,6 @@ export default function SignIn() {
                 const { token } = response.data; // Access response data properly
                 const { designation } = response.data;
                 const empID = data.empID;
-                console.log(response.data);
                 userObj.login(token, empID);
                 sessionStorage.setItem("empID", empID);
                 sessionStorage.setItem('accessToken', token);
@@ -57,12 +56,10 @@ export default function SignIn() {
                 } else if (designation === "Employee") {
                     navigate('/employee');
                 }
-            } else {
-                console.log(response.data); // Log response data for debugging
+            } else {// Log response data for debugging
                 toast.error("Error logging in"); // Display generic error message
             }
         } catch (error) {
-            console.error(error);
             if (error.response && error.response.status === 401) {
                 toast.error("Invalid credentials or user is not active");
             } else {

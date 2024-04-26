@@ -24,10 +24,8 @@ const EmployeeById = () => {
       const EMPLOYEE_BY_ID = ADMIN_EMPLOYEEBYID + empID;
       const response = await API.get(EMPLOYEE_BY_ID);
       setEmployee(response.data);
-      console.log(response.data);
       toast.success("Id is Found");
     } catch (error) {
-      console.log(error);
       toast.error("Error in ID");
     }
   }

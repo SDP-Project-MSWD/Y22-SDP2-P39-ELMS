@@ -28,7 +28,6 @@ function LeaveStatus() {
         setLeaveData(response.data.reverse());
       })
       .catch(error => {
-        console.error('Error fetching leave data:', error);
       });
   }, [empID]);
 

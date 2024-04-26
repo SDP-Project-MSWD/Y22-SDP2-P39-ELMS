@@ -56,7 +56,6 @@ const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
             setIsEditDialogOpen(false);
             toast.success("Employee details updated successfully!");
         } catch (error) {
-            console.error('Error updating Employee:', error);
             toast.error("Error updating Employee details");
         }
     };
@@ -69,7 +68,6 @@ const AllEmployeesCard = ({ allEmployees, setAllEmployees }) => {
             // If the request is successful, remove the employee from the list
             setAllEmployees(allEmployees.filter(employee => employee.empID !== empID));
         } catch (error) {
-            console.error('Error deleting Employee:', error);
         }
     }
 

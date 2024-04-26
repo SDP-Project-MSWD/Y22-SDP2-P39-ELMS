@@ -81,7 +81,6 @@ exports.userLogin = async (req, res) => {
         res.status(200).json({ success: true, message: "Email sent Successfully" });
     }
     catch(error){
-        console.error(error);
         res.status(500).json({ error: error.message });
     }
 }
@@ -103,7 +102,6 @@ exports.resetPassword = async (req, res) => {
         } else if (error instanceof jwt.JsonWebTokenError) {
             res.status(401).send({ msg: 'Invalid token. Please try again.' });
         } else {
-            console.error(error);
             res.status(500).send({ msg: 'Internal server error.' });
         }
     }

@@ -37,7 +37,6 @@ function LeaveRequestA() {
           setAcceptedLeaves(acceptedResponse.reverse());
           setRejectedLeaves(rejectedResponse.reverse());
         } catch (error) {
-          console.error('Error fetching leave requests:', error);
         }
       };
       
@@ -48,7 +47,6 @@ function LeaveRequestA() {
       await API.put(ADMIN_ACCEPT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
-      console.error('Error accepting leave request:', error);
     }
   };
 
@@ -58,7 +56,6 @@ function LeaveRequestA() {
       await API.put(ADMIN_REJECT);
       fetchData(); // Update all tables after accepting/rejecting
     } catch (error) {
-      console.error('Error rejecting leave request:', error);
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import API from '../../../Hooks/Api';
 import { Link } from 'react-router-dom';
 import { ADMIN_MULTER } from '../../../Utils/EndPoints';
+import toast from 'react-hot-toast';
 
 const Multer = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -19,10 +20,9 @@ const Multer = () => {
 
     try {
       await API.post(ADMIN_MULTER, formData);
-      console.log("File uploaded successfully!");
+      toast.success("File Uploaded Successfully!")
       setError(null); // Clear any previous errors
     } catch (error) {
-      console.error("Error uploading file:", error);
       setError('Error uploading file. Please try again.'); // Set error message
     }
   };

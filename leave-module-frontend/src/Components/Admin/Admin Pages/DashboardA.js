@@ -28,7 +28,6 @@ const Dashboard = () => {
     try {
       API.get(ADMIN_DASHBOARD)
         .then((response) => {
-          console.log(response.data);
           setTotalUsers(response.data.totalUsers);
           setUsersCount(response.data.usersCount);
           setManagersOnLeave(response.data.managersOnLeaveToday);
@@ -40,10 +39,8 @@ const Dashboard = () => {
           setEmployeesOnLeaveEmpID(response.data.employeesOnLeaveTodayEmpID);
         })
         .catch((error) => {
-          console.error("Error Fetching Details:", error);
         });
     } catch (error) {
-      console.error("Error Fetching Details:", error);
     }
   }, []);
 

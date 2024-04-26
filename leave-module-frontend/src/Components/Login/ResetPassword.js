@@ -23,7 +23,6 @@ export default function ResetPassword() {
         event.preventDefault();
         try {
             const RESET_PASSWORD_ENDPOINT = RESET_PASSWORD + id + "/" + token;
-            console.log(RESET_PASSWORD_ENDPOINT);
             const response = await axios.post(RESET_PASSWORD_ENDPOINT, { password });
     
             if (response.status === 200) {
@@ -37,9 +36,7 @@ export default function ResetPassword() {
                 toast.error("Internal server error. Please try again later.");
                 setPassword('');
             }
-            console.log(response);
         } catch (error) {
-            console.error(error);
         }
     };
     

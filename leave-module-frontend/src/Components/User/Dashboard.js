@@ -36,11 +36,9 @@ const Dashboard = () => {
                     setLeaveLimits(response.data.leaveLimits);
                 })
                 .catch((error) => {
-                    console.error("Error Fetching Details:", error);
                     //toast.error("Error Fetching Details")
                 });
         } catch (error) {
-            console.error("Error Fetching Details:", error);
         }
     }, [empID]);
 

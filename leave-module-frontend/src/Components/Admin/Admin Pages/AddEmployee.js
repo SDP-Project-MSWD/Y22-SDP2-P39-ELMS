@@ -41,8 +41,6 @@ export default function AddEmployee() {
                 phone,
                 designation
             });
-
-            console.log("Employee created successfully:", response.data);
             toast.success("Employee created successfully");
             resetForm();
         } catch (error) {

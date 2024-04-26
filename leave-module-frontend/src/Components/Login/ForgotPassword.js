@@ -31,9 +31,7 @@ export default function ForgotPassword() {
             } else {
                 toast.error("Error occurred while sending the link");
             }
-            console.log(response);
         } catch (error) {
-            console.error(error);
         }
     };
 

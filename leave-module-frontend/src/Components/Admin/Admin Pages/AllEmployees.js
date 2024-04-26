@@ -32,7 +32,6 @@ const AllEmployees = () => {
         setAllEmployees(filteredEmployees);
       })
       .catch((error) => {
-        console.error('Error fetching Employees:', error);
         if (error.response && error.response.status === 401) {
           toast.error("Unauthorized: Please login first");
         } else {

@@ -15,7 +15,6 @@ export const AuthProvider = (props) => {
     sessionStorage.setItem('empID',empID);
     setAccessToken(token);
     setEmpID(empID);
-    console.log("Received access token:", token);
   };
 
   const logout = () => {
