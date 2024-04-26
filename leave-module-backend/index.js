@@ -7,6 +7,11 @@ const authRoutes = require('./routes/authRoutes');
 const employeeRoutes = require('./routes/employeeRoutes');
 const managerRoutes = require('./routes/managerRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes')
+const multer = require('multer');
+const csv = require('csvtojson');
+const Users = require('./models/Users')
+
+
 
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
@@ -25,10 +30,36 @@ db.once('open', () => {
     console.log('Database connection is open.');
 });
 
+
 app.use('/auth', authRoutes);
 app.use('/employee', employeeRoutes);
 app.use('/manager',managerRoutes);
 app.use('/user',dashboardRoutes);
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./uploads");
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+app.use('/uploads', express.static('uploads'));
+
+const upload = multer({ storage });
+
+app.post('/uploadcsv', upload.single("csvFile"), async (req, res) => {
+    try {
+        const up = await csv().fromFile(req.file.path);
+        await studentmodel.insertMany(up);
+        console.log("Added to Database");
+        return res.send("Added to Database Successfully");
+    } catch (error) {
+        console.error("Error adding data:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
