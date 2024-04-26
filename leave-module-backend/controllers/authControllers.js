@@ -28,20 +28,33 @@ exports.userRegister = async (req, res) => {
 exports.userLogin = async (req, res) => {
     try {
         const { empID, password } = req.body;
+        
+        // Check if empID and password are provided
+        if (!empID || !password) {
+            return res.status(400).json({ error: 'Employee ID and password are required' });
+        }
+        
+        // Find user by empID
         const user = await User.findOne({ empID });
  
+        // Check if user exists and password is correct
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid empID or password' });
         }
+        
         // Extract designation from user object
         const { designation } = user;
+        
+        // Generate JWT token
         const token = jwt.sign({ userId: user._id, empID: user.empID }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        return res.status(200).json({ token: token, designation: designation }); // Send token and designation in response
-
-} catch (error) {
+        
+        // Send token and designation in response
+        return res.status(200).json({ token, designation });
+    } catch (error) {
+        console.error('Error:', error);
         return res.status(500).json({ error: 'Internal server error' });
     }
- };
+};
 
 
  exports.forgotPassword = async (req, res) => {
