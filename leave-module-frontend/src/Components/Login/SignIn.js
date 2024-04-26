@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,24 +12,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../Token/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
+import ReCAPTCHA from "react-google-recaptcha";
+
 const defaultTheme = createTheme();
+const SITE_KEY = '6LdfRsgpAAAAAK68OW-Bzx0DOLuo_a9c9kzKO_R-';
 
 export default function SignIn() {
     const navigate = useNavigate();
+    const [recaptchaValue, setRecaptchaValue] = useState('');
+    const captchaRef = useRef(null);
+
+
+
     const [data, setData] = useState({
-        empID: "", 
+        empID: "",
         password: ""
     });
     const userObj = useContext(AuthContext);
     const handleSubmit = async (event) => {
         event.preventDefault();
+        captchaRef.current.reset();
+
         const { empID, password } = data;
         try {
-            const response = await axios.post('http://localhost:4000/auth/login', { empID, password });
+            const response = await axios.post('http://localhost:4000/auth/login', { empID, password, recaptchaValue });
             if (response && response.status === 200) { // Check if response is defined
                 const { token } = response.data; // Access response data properly
                 const { designation } = response.data;
@@ -61,7 +71,10 @@ export default function SignIn() {
             }
         }
     };
-    
+
+    const onChange = value => {
+        setRecaptchaValue(value);
+    }
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -84,14 +97,14 @@ export default function SignIn() {
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
-                            autoComplete="given-number"     
+                            autoComplete="given-number"
                             name="empId"
                             required
                             fullWidth
                             id="empId"
                             label="Employee ID"
                             value={data.empId}
-                            onChange={(event) => setData({...data, empID: event.target.value})}
+                            onChange={(event) => setData({ ...data, empID: event.target.value })}
                         />
                         <TextField
                             margin="normal"
@@ -103,12 +116,21 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                             value={data.password}
-                            onChange={(event) => setData({...data, password: event.target.value})}
+                            onChange={(event) => setData({ ...data, password: event.target.value })}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
                         />
+
+                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                            <ReCAPTCHA
+                                sitekey={SITE_KEY}
+                                onChange={onChange}
+                                ref={captchaRef}
+                            />
+                        </div>
+
                         <Button
                             type="submit"
                             fullWidth
