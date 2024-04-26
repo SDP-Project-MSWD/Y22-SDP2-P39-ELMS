@@ -15,6 +15,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../Token/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { LOGIN_ENDPOINT } from '../../Utils/EndPoints';
 
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -25,7 +26,7 @@ export default function SignIn() {
     const navigate = useNavigate();
     const [recaptchaValue, setRecaptchaValue] = useState('');
     const captchaRef = useRef(null);
-    
+
     const [data, setData] = useState({
         empID: "",
         password: ""
@@ -37,7 +38,7 @@ export default function SignIn() {
 
         const { empID, password } = data;
         try {
-            const response = await axios.post('http://localhost:4000/auth/login', { empID, password, recaptchaValue });
+            const response = await axios.post(LOGIN_ENDPOINT, { empID, password, recaptchaValue });
             if (response && response.status === 200) { // Check if response is defined
                 const { token } = response.data; // Access response data properly
                 const { designation } = response.data;
