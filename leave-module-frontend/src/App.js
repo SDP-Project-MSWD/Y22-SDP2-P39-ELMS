@@ -17,7 +17,8 @@ import DashboardA from './Components/Admin/Admin Pages/DashboardA';
 import LeaveRequestA from './Components/LeavePages/LeaveRequests';
 import AddEmployee from './Components/Admin/Admin Pages/AddEmployee';
 import AllEmployees from './Components/Admin/Admin Pages/AllEmployees';
-import EmployeeByID from './Components/Admin/Admin Pages/EmployeeByID'; 
+import EmployeeByID from './Components/Admin/Admin Pages/EmployeeByID';
+import Multer from './Components/Admin/Admin Pages/Multer'; 
 
 //import for Manager 
 import DashboardM from './Components/User/Dashboard';
@@ -57,6 +58,7 @@ function App() {
             <Route path='add-employee' element={<AddEmployee/>}/>
             <Route path='all-employees' element={<AllEmployees/>} />
             <Route path='employee-by-id' element={<EmployeeByID />}/>
+            <Route path='multer' element={<Multer />}/>
             <Route path='profile' element={<Profile />} />
           </Route>
           <Route path="manager" element={<HomeM />}>

@@ -53,6 +53,12 @@ const LeaveSubMenu = () => {
             </ListItemIcon>
             <ListItemText primary="Employee Detail" />
           </ListItemButton>
+          <ListItemButton component={RouterLink} to="/admin/multer">
+            <ListItemIcon>
+            <img src={EmpID} alt='Leave Request Images' className='avatar' style={{ width: '24px', height: '24px' }}/>
+            </ListItemIcon>
+            <ListItemText primary="Multer" />
+          </ListItemButton>
         </List>
       </Collapse>
     </React.Fragment>
