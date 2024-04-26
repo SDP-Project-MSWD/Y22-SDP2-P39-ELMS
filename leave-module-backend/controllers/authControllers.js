@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/Users');
 const sendMail = require('../utils/sendMail');
 const nodemailer = require("nodemailer");
-const axios = require('axios');
+
 exports.userRegister = async (req, res) => {
     try {
         const { empID, email, password, firstName, lastName, dob, phone, designation } = req.body;
@@ -27,27 +27,17 @@ exports.userRegister = async (req, res) => {
 
 exports.userLogin = async (req, res) => {
     try {
-        const { empID, password, recaptchaValue } = req.body;
-        SECRET_KEY_CAPCHA = process.env.SECRET_KEY
-        axios({url: `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY_CAPCHA}&response=${recaptchaValue}`,  method: 'POST',
-    }).then(async ({ data }) => {
-        
+        const { empID, password } = req.body;
         const user = await User.findOne({ empID });
  
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(401).json({ error: 'Invalid empID or password' });
         }
-        
         // Extract designation from user object
         const { designation } = user;
-        if(data.success){
         const token = jwt.sign({ userId: user._id, empID: user.empID }, process.env.JWT_SECRET, { expiresIn: '1h' });
         return res.status(200).json({ token: token, designation: designation }); // Send token and designation in response
-    }else{
-        res.status(400).json({ message: 'Recaptcha verification failed!' });
 
-    }
-});
 } catch (error) {
         return res.status(500).json({ error: 'Internal server error' });
     }
