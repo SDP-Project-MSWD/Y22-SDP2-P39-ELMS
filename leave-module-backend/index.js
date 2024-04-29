@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cors());
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://amazing-peony-b58f31.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
