@@ -1,5 +1,5 @@
 // Main Backend-Server URL
-export const SERVERURL = "http://localhost:4000/";
+export const SERVERURL = "https://leave-module-backend.onrender.com/";
 
 //Authentication Endpoints for User
 export const LOGIN_ENDPOINT = SERVERURL + "auth/login";
