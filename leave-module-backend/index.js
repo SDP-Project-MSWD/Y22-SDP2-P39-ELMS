@@ -34,6 +34,10 @@ app.use('/employee', employeeRoutes);
 app.use('/manager', managerRoutes);
 app.use('/user', dashboardRoutes);
 
+app.use('/', (req, res) => {
+    res.json({ message: "Your Backend API is working properly" });
+});
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./uploads");
